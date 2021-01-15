@@ -12,6 +12,7 @@ RSpec.describe "New Discount" do
 
     expect(current_path).to eq(merchant_discounts_path(merchant))
     expect(page).to have_content("20% off orders of 10 or more")
+    expect(page).to have_content("Discount Successfully Added")
   end
 
   it "does not allow creation of incomplete discounts" do
