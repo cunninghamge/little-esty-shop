@@ -36,7 +36,8 @@ RSpec.describe "Discounts Index" do
       expect(current_path).to eq(merchant_discounts_path(merchant))
       text = "#{discounts[0].percentage}% off orders of #{discounts[0].threshold} or more"
       expect(page).not_to have_content(text)
-      expect(Discount.find(discounts[0].id)).to raise_exception(ActiveRecord::RecordNotFound)
+      expect(page).to have_content("Discount Deleted")
+      expect {Discount.find(discounts[0].id)}.to raise_exception(ActiveRecord::RecordNotFound)
     end
   end
 end
