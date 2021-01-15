@@ -1,0 +1,7 @@
+<h1>Discounts</h1>
+
+<ul><% @discounts.each do |discount| %>
+  <li><%= "#{discount.percentage}% off orders of #{discount.threshold} or more" %>
+    <%= button_to "View Details", discount_path(discount), method: :get%></li>
+  <% end %>
+</ul>
