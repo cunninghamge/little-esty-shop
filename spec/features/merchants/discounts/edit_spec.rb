@@ -6,8 +6,8 @@ RSpec.describe "Edit Discount" do
   it "has a form pre-filled with the discount's attributes" do
     visit edit_discount_path(discount)
 
-    expect(page.find_field("discount[percentage]").value).to eq(discount.percentage)
-    expect(page.find_field("discount[threshold]").value).to eq(discount.threshold)
+    expect(page.find_field("discount[percentage]").value).to eq(discount.percentage.to_s)
+    expect(page.find_field("discount[threshold]").value).to eq(discount.threshold.to_s)
   end
 
   it "edits the discount's attributes" do
