@@ -13,6 +13,14 @@ describe Item, type: :model do
     it {should validate_presence_of :unit_price}
   end
 
+  describe "alias methods" do
+    it "item_price" do
+      item = create(:item)
+
+      expect(item.item_price).to eq(item.unit_price)
+    end
+  end
+
   describe "scopes" do
     it 'enabled' do
       enabled_item = create(:item, enabled: true)
