@@ -11,6 +11,8 @@ class Merchant < ApplicationRecord
   delegate :total_revenue, to: :invoices
   delegate :top_sales_day, to: :invoices
 
+  delegate :discounts_index, to: :discounts
+
   def self.top_merchants(number = 5)
     joins(invoices: [:transactions, :invoice_items])
     .where("result = 0")
