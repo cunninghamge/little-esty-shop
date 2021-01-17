@@ -1,4 +1,4 @@
-class Merchants::DiscountsController < ApplicationController
+class Merchant::DiscountsController < Merchant::BaseController
   def index
     @discounts = Merchant.find(params[:merchant_id]).discounts
   end

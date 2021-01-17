@@ -91,9 +91,9 @@ RSpec.describe "navigation bar" do
       it {visit admin_invoices_path}
       it {visit admin_merchants_path}
       it {visit merchant_dashboard_path(merchant)}
-      it {visit merchant_invoices_path}
-      it {visit merchant_items_path}
-      it {visit merchant_discounts_path}
+      it {visit merchant_invoices_path(merchant)}
+      it {visit merchant_items_path(merchant)}
+      it {visit merchant_discounts_path(merchant)}
 
       after(:each) do
         expect(page.status_code).to eq(404)
@@ -106,10 +106,10 @@ RSpec.describe "navigation bar" do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       end
 
-      it {visit merchant_dashboard_path}
-      it {visit merchant_invoices_path}
-      it {visit merchant_items_path}
-      it {visit merchant_discounts_path}
+      it {visit merchant_dashboard_path(merchant)}
+      it {visit merchant_invoices_path(merchant)}
+      it {visit merchant_items_path(merchant)}
+      it {visit merchant_discounts_path(merchant)}
       it {visit admin_dashboard_path}
       it {visit admin_invoices_path}
       it {visit admin_merchants_path}
@@ -124,10 +124,11 @@ RSpec.describe "navigation bar" do
         user = create(:user, role: 0)
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       end
-      it {visit merchant_dashboard_path}
-      it {visit merchant_invoices_path}
-      it {visit merchant_items_path}
-      it {visit merchant_discounts_path}
+
+      it {visit merchant_dashboard_path(merchant)}
+      it {visit merchant_invoices_path(merchant)}
+      it {visit merchant_items_path(merchant)}
+      it {visit merchant_discounts_path(merchant)}
       it {visit admin_dashboard_path}
       it {visit admin_invoices_path}
       it {visit admin_merchants_path}
@@ -158,10 +159,10 @@ RSpec.describe "navigation bar" do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       end
 
-      it {visit merchant_dashboard_path}
-      it {visit merchant_invoices_path}
-      it {visit merchant_items_path}
-      it {visit merchant_discounts_path}
+      it {visit merchant_dashboard_path(merchant)}
+      it {visit merchant_invoices_path(merchant)}
+      it {visit merchant_items_path(merchant)}
+      it {visit merchant_discounts_path(merchant)}
 
       after(:each) do
         expect(page.status_code).to eq(200)

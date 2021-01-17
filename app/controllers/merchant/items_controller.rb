@@ -1,4 +1,4 @@
-class Merchants::ItemsController < ApplicationController
+class Merchant::ItemsController < Merchant::BaseController
   before_action :get_item, only: [:show, :edit]
 
   def index
