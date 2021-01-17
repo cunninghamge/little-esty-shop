@@ -4,5 +4,6 @@ class User < ApplicationRecord
   validates_presence_of :password, require: true
 
   belongs_to :merchant, optional: true
-  enum role: %w(default merchant admin)
+  belongs_to :customer, optional: true
+  enum role: %w(customer merchant admin)
 end

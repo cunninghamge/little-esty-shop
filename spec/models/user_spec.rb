@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User do
   describe 'relationships' do
     it {should belong_to(:merchant).optional}
+    it {should belong_to(:customer).optional}
   end
 
   describe 'validations' do
@@ -12,10 +13,10 @@ RSpec.describe User do
   end
 
   describe 'roles' do
-    it "can be a default user" do
+    it "can be a customer" do
       user = create(:user)
 
-      expect(user.role).to eq("default")
+      expect(user.role).to eq("customer")
     end
 
     it "can be a merchant" do
