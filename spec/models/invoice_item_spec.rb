@@ -19,13 +19,13 @@ describe InvoiceItem, type: :model do
   end
 
   describe "class methods" do
-    it "invoice_amount" do
-      invoice = FactoryBot.create(:invoice)
-      ii1 = FactoryBot.create(:invoice_item, invoice_id:invoice.id, quantity: 3, unit_price: 5) #15
-      ii2 = FactoryBot.create(:invoice_item, invoice_id:invoice.id, quantity: 4, unit_price: 5) #20
-      ii3 = FactoryBot.create(:invoice_item, invoice_id:invoice.id, quantity: 5, unit_price: 5) #25
+    it "total_revenue" do
+      discount = create(:discount, threshold: 5, percentage: 10)
+      items = create_list(:item, 2, unit_price: 10)
+      create(:invoice_item, quantity: 5, item: items[0], discount: discount, unit_price: 9)
+      create(:invoice_item, quantity: 5, item: items[1], discount: discount, unit_price: 9)
 
-      expect(invoice.invoice_items.invoice_amount).to eq(15+20+25)
+      expect(InvoiceItem.total_revenue).to eq(90)
     end
   end
 
@@ -59,9 +59,18 @@ describe InvoiceItem, type: :model do
         expect(invoice_item.total).to eq(45)
       end
     end
+  end
 
-    describe "#discount_code" do
-      
+  describe 'class methods' do
+    describe "#discount_total" do
+      it "calculates the discount amount for a group of invoice_items" do
+        discount = create(:discount, threshold: 5, percentage: 10)
+        items = create_list(:item, 2, unit_price: 10)
+        create(:invoice_item, quantity: 5, item: items[0], discount: discount, unit_price: 9)
+        create(:invoice_item, quantity: 5, item: items[1], discount: discount, unit_price: 9)
+
+        expect(InvoiceItem.discount_total).to eq(-10)
+      end
     end
   end
 end
