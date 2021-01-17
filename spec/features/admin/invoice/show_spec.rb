@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "admin invoices show page" do
+  include ActionView::Helpers::NumberHelper
+  include ApplicationHelper
+
   before :each do
     @invoice = FactoryBot.create(:invoice)
     FactoryBot.create_list(:invoice_item, 4, invoice_id: @invoice.id )
@@ -11,7 +14,7 @@ RSpec.describe "admin invoices show page" do
     within("#invoice-information") do
       expect(page).to have_content(@invoice.id)
       expect(page).to have_content(@invoice.status)
-      expect(page).to have_content(@invoice.created_at.strftime("%A, %B %d, %Y"))
+      expect(page).to have_content(format_date(@invoice.created_at))
     end
   end
 
@@ -26,10 +29,9 @@ RSpec.describe "admin invoices show page" do
   it "displays items' information related to invoice" do
     within("#invoice-items-information") do
       @invoice.invoice_items.each do |ii|
-        within("#invoice-item-#{ii.id}") do
+        within("#item-#{ii.id}") do
           expect(page).to have_content(ii.item.name)
           expect(page).to have_content(ii.quantity)
-          expect(page).to have_content(ii.unit_price)
           expect(page).to have_content(ii.status)
         end
       end
@@ -38,7 +40,7 @@ RSpec.describe "admin invoices show page" do
 
   it "displays total revenue of the current invoice" do
     within("#invoice-information") do
-      expect(page).to have_content(@invoice.invoice_items.total_revenue)
+      expect(page).to have_content(format_price(@invoice.invoice_items.total_revenue))
     end
   end
 

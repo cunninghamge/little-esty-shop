@@ -91,13 +91,13 @@ RSpec.describe "Merchant Invoices show" do
     it "displays the total revenue for the invoice" do
       visit merchant_invoice_path(merchant, invoice)
 
-      expect(page).to have_content("Total Revenue: $#{invoice.total_revenue}")
+      expect(page).to have_content("Total Revenue: #{format_price(invoice.total_revenue)}")
     end
 
     it "includes the total amount of discounts applied" do
       visit merchant_invoice_path(merchant, invoice)
 
-      within("tr.totals") do
+      within("tr.total") do
         expect(page).to have_content(format_price(invoice_items.discount_total))
         expect(page).to have_content(format_price(invoice_items.total_revenue))
       end
