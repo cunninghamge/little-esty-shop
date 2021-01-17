@@ -9,6 +9,11 @@ RSpec.describe "Merchant Invoices show" do
   let(:invoice) {create(:invoice, merchant: merchant, customer: customer)}
   let!(:invoice_item) {create(:invoice_item, invoice: invoice, quantity: 5,   unit_price: 1, status: 0)}
 
+  let(:discount_1) {create(:discount_1, merchant: merchant)}
+  let!(:discounted_inv_item) {create(:invoice_item, invoice: invoice, quantity: 11, discount: discount_1)}
+
+  let!(:invoice_items) {InvoiceItem.all}
+
   describe "invoice details" do
     it "invoices that have merchant's items" do
       visit merchant_invoice_path(merchant, invoice)
@@ -27,9 +32,6 @@ RSpec.describe "Merchant Invoices show" do
   end
 
   describe "item details" do
-    let(:discount_1) {create(:discount_1, merchant: merchant)}
-    let!(:discounted_inv_item) {create(:invoice_item, invoice: invoice, quantity: 11, discount: discount_1)}
-
     it "displays detailed price info for undiscounted items" do
       visit merchant_invoice_path(merchant, invoice)
 
@@ -58,7 +60,7 @@ RSpec.describe "Merchant Invoices show" do
         expect(page).to have_content(price)
         price = format_price(discounted_inv_item.discount_amt)
         expect(page).to have_content(price)
-        expect(page).to have_link(discounted_inv_item.discount_code, href: discount_path(discount_1))
+        expect(page).to have_link(discount_details(discount_1), href: discount_path(discount_1))
         price = format_price(discounted_inv_item.total)
         expect(page).to have_content(price)
       end
@@ -86,33 +88,19 @@ RSpec.describe "Merchant Invoices show" do
   end
 
   describe "total revenue" do
-    it "can display revenue without discounts" do
-      merchant1 = create(:merchant)
-      items = create_list(:item, 5, merchant: merchant1, unit_price: 1)
-
-      customer = create(:customer, first_name: "Linda", last_name: "Mayhew")
-
-      invoice = create(:invoice, merchant: merchant1, customer: customer)
-
-      items.each do |item|
-        create(:invoice_item, item: item, invoice: invoice, quantity: 5, unit_price: 1)
-      end
-
-      visit merchant_invoice_path(merchant1, invoice)
-
-      expect(page).to have_content("Total Revenue: $#{invoice.invoice_amount}")
-    end
-
-    xit "can display total revenue with discounts" do
-      merchant = create(:merchant)
-      item = create(:item, merchant: merchant)
-      discount = create(:discount, percentage: 10, threshold: 5, merchant: merchant)
-      invoice = create(:invoice, merchant: merchant)
-      invoice_item = create(:invoice_item, item: item, quantity: 5, discount: discount)
-
+    it "displays the total revenue for the invoice" do
       visit merchant_invoice_path(merchant, invoice)
 
-      expect(page).to have_content("Total Revenue: $#{invoice.invoice_amount}")
+      expect(page).to have_content("Total Revenue: $#{invoice.total_revenue}")
+    end
+
+    it "includes the total amount of discounts applied" do
+      visit merchant_invoice_path(merchant, invoice)
+
+      within("tr.totals") do
+        expect(page).to have_content(format_price(invoice_items.discount_total))
+        expect(page).to have_content(format_price(invoice_items.total_revenue))
+      end
     end
   end
 end
