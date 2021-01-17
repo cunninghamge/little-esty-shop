@@ -5,7 +5,7 @@
     <th>Quantity</th>
     <th>Subtotal</th>
     <th>Discounts Applied</th>
-    <th>Item Total</th>
+    <th>Total</th>
     <th>Status</th>
   </tr>
   <% @invoice_items.each do |invoice_item| %>
@@ -16,7 +16,7 @@
     <td><%= format_price(invoice_item.subtotal) %></td>
     <td class="discount"><%  if invoice_item.discount_amt != 0 %>
       <%= format_price(invoice_item.discount_amt)%><br>
-      <%= link_to invoice_item.discount_code, discount_path(invoice_item.discount) %>
+      <%= link_to discount_details(invoice_item.discount), discount_path(invoice_item.discount) %>
       <% end %></td>
     <td><%= format_price(invoice_item.total) %></td>
     <td><%= form_with model: [@merchant, invoice_item], method: :patch, local: true do |f| %>
@@ -29,9 +29,10 @@
     <td></td>
     <td></td>
     <td></td>
-    <td><%= "@invoice_items.subtotal" %></td>
-    <td><%= "@invoice_items.discount_total" %></td>
-    <td><%= "@invoice_items.total_revenue" %></td>
+    <td></td>
+    <td><% total = format_price(@invoice_items.discount_total) %>
+        <%= (total=="$0.00") ? nil:total %></td>
+    <td><%= format_price(@invoice_items.total_revenue) %></td>
     <td></td>
   </tr>
 </table>
