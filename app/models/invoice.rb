@@ -7,7 +7,7 @@ class Invoice < ApplicationRecord
 
   enum status: ['in progress', 'completed', 'cancelled']
 
-  delegate :invoice_amount, to: :invoice_items
+  delegate :total_revenue, to: :invoice_items
 
   def self.incomplete_invoices
     where(status: "in progress").order(created_at: :asc)

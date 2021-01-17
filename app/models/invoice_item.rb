@@ -7,9 +7,8 @@ class InvoiceItem < ApplicationRecord
 
   delegate :name, to: :item, prefix: true
   delegate :item_price, to: :item
-  delegate :discount_code, to: :discount
 
-  def self.invoice_amount
+  def self.total_revenue
     sum('quantity * unit_price')
   end
 
@@ -23,5 +22,9 @@ class InvoiceItem < ApplicationRecord
 
   def discount_amt
     total - subtotal
+  end
+
+  def self.discount_total
+    joins(:item).sum("quantity*(invoice_items.unit_price - items.unit_price)")
   end
 end
