@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe "Admin Merchants Edit Page" do
   before :each do
+    user = create(:user, role: 2)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     @merchant = create(:merchant)
     visit edit_admin_merchant_path(@merchant.id)
   end
