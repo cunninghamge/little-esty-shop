@@ -81,7 +81,7 @@ RSpec.describe "User authentication" do
       click_on "Log Out"
 
       expect(current_path).to eq(root_path)
-      expect(page).to have_content("Successfully Logged Out")
+      expect(page).to have_content("Successfully logged out")
       expect(page).not_to have_link("Log Out")
       expect(page).to have_link("Register")
       expect(page).to have_link("Log In")
