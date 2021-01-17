@@ -1,10 +1,10 @@
 class Merchant::InvoicesController < Merchant::BaseController
   def index
-    @invoices = Merchant.find(params[:merchant_id]).invoices
+    @invoices = current_user.merchant.invoices
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = current_user.merchant
     @invoice = Invoice.find(params[:id])
     @invoice_items = @invoice.invoice_items
   end

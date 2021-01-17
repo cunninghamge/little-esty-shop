@@ -2,7 +2,7 @@ class Merchant::ItemsController < Merchant::BaseController
   before_action :get_item, only: [:show, :edit]
 
   def index
-    @items = Merchant.find(params[:merchant_id]).items
+    @items = current_user.merchant.items
   end
 
   def update
@@ -16,12 +16,12 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def new
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = current_user.merchant
     @item = Item.new
   end
 
   def create
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = current_user.merchant
     @item = Item.new(item_params.merge(enabled: false, merchant_id: params[:merchant_id]))
     if @item.save
       flash.notice = ["Successfully Added Item"]

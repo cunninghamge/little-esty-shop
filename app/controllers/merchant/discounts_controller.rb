@@ -1,6 +1,6 @@
 class Merchant::DiscountsController < Merchant::BaseController
   def index
-    @discounts = Merchant.find(params[:merchant_id]).discounts
+    @discounts = current_user.merchant.discounts
   end
 
   def show
@@ -8,12 +8,12 @@ class Merchant::DiscountsController < Merchant::BaseController
   end
 
   def new
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = current_user.merchant
     @discount = Discount.new
   end
 
   def create
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = current_user.merchant
     @discount = @merchant.discounts.new(discount_params)
     if @discount.save
       flash.notice = ["Discount Successfully Added"]

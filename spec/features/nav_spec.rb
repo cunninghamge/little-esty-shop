@@ -43,7 +43,7 @@ RSpec.describe "navigation bar" do
     end
 
     it "merchant" do
-      user = create(:user, role: 1)
+      user = create(:user, role: 1, merchant: merchant)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
@@ -155,7 +155,7 @@ RSpec.describe "navigation bar" do
 
     describe "allows a merchant to access merchant pages" do
       before(:each) do
-        user = create(:user, role: 1)
+        user = create(:user, role: 1, merchant: merchant)
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       end
 
@@ -165,7 +165,7 @@ RSpec.describe "navigation bar" do
       it {visit merchant_discounts_path(merchant)}
 
       after(:each) do
-        expect(page.status_code).to eq(200)
+        expect(page.status_code).not_to eq(404)
       end
     end
 
