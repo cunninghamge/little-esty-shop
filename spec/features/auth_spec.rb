@@ -47,8 +47,7 @@ RSpec.describe "User authentication" do
 
       fill_in :username, with: user.username
       fill_in :password, with: user.password
-
-      click_on "Log In"
+      within("form") {click_on "Log In"}
 
       expect(current_path).to eq(root_path)
 
