@@ -7,16 +7,23 @@ RSpec.describe "Merchant Invoices show" do
   let(:merchant) {create(:merchant)}
   let(:customer) {create(:customer)}
   let(:invoice) {create(:invoice, merchant: merchant, customer: customer)}
-  let!(:invoice_item) {create(:invoice_item, invoice: invoice, quantity: 5,   unit_price: 1, status: 0)}
+  let!(:invoice_item) {create(:invoice_item, invoice: invoice, quantity: 5,  unit_price: 1, status: 0)}
 
   let(:discount_1) {create(:discount_1, merchant: merchant)}
   let!(:discounted_inv_item) {create(:invoice_item, invoice: invoice, quantity: 11, discount: discount_1)}
+
+  let(:merchant) {create(:merchant)}
+
+  before(:each) do
+    user = create(:user, role: 1, merchant: merchant)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+  end
 
   let!(:invoice_items) {InvoiceItem.all}
 
   describe "invoice details" do
     it "invoices that have merchant's items" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       expect(page).to have_content(invoice.id)
       expect(page).to have_content(format_date(invoice.created_at))
@@ -24,7 +31,7 @@ RSpec.describe "Merchant Invoices show" do
     end
 
     it "customer info" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       expect(page).to have_content(name(customer))
       expect(page).to have_content(customer.address)
@@ -33,7 +40,7 @@ RSpec.describe "Merchant Invoices show" do
 
   describe "item details" do
     it "displays detailed price info for undiscounted items" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       within("#item-#{invoice_item.id}") do
         expect(page).to have_content(invoice_item.item_name)
@@ -49,7 +56,7 @@ RSpec.describe "Merchant Invoices show" do
     end
 
     it "displays detailed price info for discounted items" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       within("#item-#{discounted_inv_item.id}") do
         expect(page).to have_content(discounted_inv_item.item_name)
@@ -60,14 +67,14 @@ RSpec.describe "Merchant Invoices show" do
         expect(page).to have_content(price)
         price = format_price(discounted_inv_item.discount_amt)
         expect(page).to have_content(price)
-        expect(page).to have_link(discount_details(discount_1), href: discount_path(discount_1))
+        expect(page).to have_link(discount_details(discount_1), href: merchant_discount_path(discount_1))
         price = format_price(discounted_inv_item.total)
         expect(page).to have_content(price)
       end
     end
 
     it "can alter invoice_item status" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       within "#item-#{invoice_item.id}" do
         expect(page).to have_select("invoice_item[status]", selected: "pending")
@@ -89,13 +96,13 @@ RSpec.describe "Merchant Invoices show" do
 
   describe "total revenue" do
     it "displays the total revenue for the invoice" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       expect(page).to have_content("Total Revenue: #{format_price(invoice.total_revenue)}")
     end
 
     it "includes the total amount of discounts applied" do
-      visit merchant_invoice_path(merchant, invoice)
+      visit merchant_invoice_path(invoice)
 
       within("tr.total") do
         expect(page).to have_content(format_price(invoice_items.discount_total))

@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "New Discount" do
   let(:merchant) {create(:merchant)}
+  
+  before(:each) do
+    user = create(:user, role: 1, merchant: merchant)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+  end
 
   it "creates a new discount" do
     visit new_merchant_discount_path(merchant)

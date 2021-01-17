@@ -11,7 +11,7 @@ class Merchant::ItemsController < Merchant::BaseController
       redirect_to merchant_items_path(params[:merchant_id])
     else
       flash.notice = ["Item has been updated!"]
-      redirect_to item_path(@item)
+      redirect_to merchant_item_path(@item)
     end
   end
 
@@ -22,10 +22,10 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def create
     @merchant = current_user.merchant
-    @item = Item.new(item_params.merge(enabled: false, merchant_id: params[:merchant_id]))
+    @item = @merchant.items.new(item_params.merge(enabled: false))
     if @item.save
       flash.notice = ["Successfully Added Item"]
-      redirect_to merchant_items_path(params[:merchant_id])
+      redirect_to merchant_items_path
     else
       flash.alert = @item.errors.full_messages
       render :new, obj: [@merchant, @item]
