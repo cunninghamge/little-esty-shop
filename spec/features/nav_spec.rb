@@ -9,7 +9,7 @@ RSpec.describe "navigation bar" do
         expect(page).to have_link("Home", href: root_path)
         expect(page).to have_link("Items", href: items_path)
         expect(page).to have_link("Log In", href: login_path)
-        expect(page).to have_link("Register", href: register_path)
+        expect(page).to have_link("Register", href: new_user_path)
         expect(page).to have_content("My Cart (0)")
       end
     end
