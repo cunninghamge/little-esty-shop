@@ -31,13 +31,13 @@ class Merchant::DiscountsController < Merchant::BaseController
   def update
     Discount.find(params[:id]).update(discount_params)
     flash.notice = ["Discount has been updated!"]
-    redirect_to discount_path(params[:id])
+    redirect_to merchant_discount_path(params[:id])
   end
 
   def destroy
     Discount.find(params[:id]).destroy
     flash.notice = ["Discount Deleted"]
-    redirect_to merchant_discounts_path(params[:merchant_id])
+    redirect_to merchant_discounts_path
   end
 
   private

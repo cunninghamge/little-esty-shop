@@ -17,6 +17,6 @@
   <% end %>
 
   <% if current_merchant? %>
-    <%= link_to "Dashboard", merchant_dashboard_path(@merchant) %>
+    <%= link_to "Dashboard", merchant_dashboard_path(current_user.merchant) %>
   <% end %>
 </header>

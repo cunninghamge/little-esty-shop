@@ -1,0 +1,8 @@
+<h1>Discounts</h1>
+<%= link_to "New Discount", new_merchant_discount_path(params[:merchant_id]) %>
+<ul><% @discounts.each do |discount| %>
+  <li id="discount-<%= discount.id %>"><%= discount_details(discount) %>
+    <%= button_to "View Details", merchant_discount_path(discount), method: :get%>
+    <%= button_to "Delete", merchant_discount_path(discount), method: :delete %></li>
+  <% end %>
+</ul>
