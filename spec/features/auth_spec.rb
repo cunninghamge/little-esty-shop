@@ -2,21 +2,21 @@ require 'rails_helper'
 
 RSpec.describe "User authentication" do
   describe "user registration form" do
-    describe "creates a new user" do
+    it "creates a new user" do
       visit root_path
 
       click_link("Register")
 
       expect(current_path).to eq(new_user_path)
 
-      fill_in("user[:username]", with: "testuser")
-      fill_in("user[:password]", with: "testpassword")
-      click_on("Register")
+      fill_in("user[username]", with: "testuser")
+      fill_in("user[password]", with: "testpassword")
+      within("form") {click_on("Register")}
 
       expect(page).to have_content("Logged in as testuser")
     end
 
-    describe "keeps a user logged in after registering" do
+    it "keeps a user logged in after registering" do
       visit root_path
 
       click_link("Register")

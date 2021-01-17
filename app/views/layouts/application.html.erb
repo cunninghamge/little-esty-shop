@@ -10,9 +10,7 @@
   </head>
 
   <body>
-    <header class="admin">
-      <%= render 'shared/navbar' %>
-    </header class="admin">
+    <%= render 'shared/navbar' %>
     <ul id="flash-messages" >
       <% flash.each do |notice, messages| %>
         <% messages.each do |message| %>
@@ -20,7 +18,7 @@
           <% end %>
       <% end %>
     </ul>
-
+    
     <%= yield %>
   </body>
 
