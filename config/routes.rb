@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   # end
 
   namespace :admin, shallow: true do
-    get '/dashboard', to: 'dashboard#index'
+    get '/', to: 'dashboard#index'
     resources :merchants
     resources :invoices, only: [:index, :show, :update]
   end

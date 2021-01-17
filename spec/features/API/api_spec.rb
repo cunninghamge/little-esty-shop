@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "API page" do
   it "displays the repo name" do
-    visit admin_dashboard_path
+    visit root_path
 
     within("#api-block") do
       expect(page).to have_content("little-esty-shop")
@@ -11,7 +11,7 @@ RSpec.describe "API page" do
 
   it "display number of commits next to each github collaborator's name" do
     contributors = ["BrianZanti", "GrayMyers", "ribbansmax", "cunninghamge", "timomitchel", "ninesky00", "scottalexandra"]
-    visit admin_dashboard_path
+    visit root_path
 
     within("#api-block") do
       contributors.each do |c|
@@ -28,7 +28,7 @@ RSpec.describe "API page" do
   end
 
   it "displays number of merged PRs across all team members" do
-    visit admin_dashboard_path
+    visit root_path
 
     within("#api-block") do
       expect(page).to have_content('merged pull requests')
