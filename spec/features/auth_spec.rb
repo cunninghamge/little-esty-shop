@@ -4,7 +4,6 @@ RSpec.describe "User authentication" do
   describe "user registration form" do
     it "creates a new user" do
       visit root_path
-
       click_link("Register")
 
       expect(current_path).to eq(new_user_path)
@@ -18,7 +17,6 @@ RSpec.describe "User authentication" do
 
     it "keeps a user logged in after registering" do
       visit root_path
-
       click_link("Register")
 
       expect(current_path).to eq(new_user_path)
@@ -40,10 +38,9 @@ RSpec.describe "User authentication" do
       user = User.create(username: "testusername", password: "testpassword")
 
       visit root_path
-
       click_on "Log In"
 
-      expect(current_path).to eq('/login')
+      expect(current_path).to eq(login_path)
 
       fill_in :username, with: user.username
       fill_in :password, with: user.password
@@ -61,19 +58,15 @@ RSpec.describe "User authentication" do
       user = User.create(username: "testusername", password: "testpassword")
 
       visit root_path
-
       click_on "Log In"
-
-      expect(current_path).to eq('/login')
 
       fill_in :username, with: user.username
       fill_in :password, with: "incorrect password"
+      within('form') {click_on "Log In"}
 
-      click_on "Log In"
+      expect(current_path).to eq(login_path)
 
-      expect(current_path).to eq('/login')
-
-      expect(page).to have_content("Sorry, your credentials are bad.")
+      expect(page).to have_content("Invalid username or password")
     end
 
     it "logging out" do
@@ -83,7 +76,7 @@ RSpec.describe "User authentication" do
       expect(current_path).to eq('/login')
       fill_in :username, with: user.username
       fill_in :password, with: user.password
-      click_on "Log In"
+      within('form') {click_on "Log In"}
 
       click_on "Log Out"
 
