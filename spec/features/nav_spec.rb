@@ -21,7 +21,7 @@ RSpec.describe "navigation bar" do
       end
     end
 
-    it "default user" do
+    it "customer" do
       user = create(:user, role: 0)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -100,7 +100,7 @@ RSpec.describe "navigation bar" do
       end
     end
 
-    describe "does not allow a default user to access merchant or admin pages" do
+    describe "does not allow a customer to access merchant or admin pages" do
       before(:each) do
         user = create(:user, role: 0)
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -119,7 +119,7 @@ RSpec.describe "navigation bar" do
       end
     end
 
-    describe "does not allow a default user to access merchant or admin pages" do
+    describe "does not allow a customer to access merchant or admin pages" do
       before(:each) do
         user = create(:user, role: 0)
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
