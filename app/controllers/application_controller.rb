@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :call_github
 
-  helper_method :current_user, :current_admin?
+  helper_method :current_user, :current_admin?, :current_merchant?
 
   def call_github
     @api_info = ApiSearch.instance
@@ -13,5 +13,9 @@ class ApplicationController < ActionController::Base
 
   def current_admin?
     current_user && current_user.admin?
+  end
+
+  def current_merchant?
+    current_user && current_user.merchant?
   end
 end

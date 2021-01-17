@@ -1,7 +1,9 @@
 <header id="nav">
   <%= link_to "Home", root_path %>
   <%= link_to "Items", items_path %>
-  <p>My Cart (0)</p>
+  <% if !current_admin? && !current_merchant? %>
+    <p>My Cart (0)</p>
+  <% end %>
   <% if current_user %>
     <p>Logged in as <%= current_user.username %></p>
     <%= link_to "Log Out", logout_path, method: :delete %>
@@ -11,6 +13,8 @@
   <% end %>
 
   <% if current_admin? %>
-    <%= link_to "Admin Dashboard", admin_dashboard_path %>
+    <%= link_to "Dashboard", admin_dashboard_path %>
   <% end %>
+
+  <%= link_to "Dashboard", merchant_dashboard_path() %>
 </header>

@@ -8,10 +8,11 @@ Rails.application.routes.draw do
 
   resources :items, only: [:index]
 
+  namespace :merchant do
+    get '/:id/dashboard', to: 'dashboard#index', as: :dashboard
+  end
+
   resources :merchants do
-    member do
-      get 'dashboard'
-    end
     scope module: "merchants" do
       resources :discounts, shallow: true
       resources :items, only: :update

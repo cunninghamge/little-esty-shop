@@ -2,17 +2,17 @@ require "rails_helper"
 
 RSpec.describe "Merchant Dashboard" do
   let(:merchant) {create(:merchant)}
-  let(:visit_path) {visit dashboard_merchant_path(merchant)}
+  let(:visit_path) {visit merchant_dashboard_path(merchant)}
 
   describe "displays" do
     it "the merchant name" do
-      visit dashboard_merchant_path(merchant)
+      visit merchant_dashboard_path(merchant)
 
       expect(page).to have_content(merchant.name)
     end
 
     it "link to merchant's item index" do
-      visit dashboard_merchant_path(merchant)
+      visit merchant_dashboard_path(merchant)
 
       click_link "My Items"
 
@@ -20,7 +20,7 @@ RSpec.describe "Merchant Dashboard" do
     end
 
     it "link to merchant's invoices index" do
-      visit dashboard_merchant_path(merchant)
+      visit merchant_dashboard_path(merchant)
 
       click_link "My Invoices"
 
@@ -28,7 +28,7 @@ RSpec.describe "Merchant Dashboard" do
     end
 
     it "link to merchants discounts index" do
-      visit dashboard_merchant_path(merchant)
+      visit merchant_dashboard_path(merchant)
 
       click_link "My Discounts"
 
@@ -49,7 +49,7 @@ RSpec.describe "Merchant Dashboard" do
       it "listing the top 5 customers, with purchase counts, in order" do
         not_top = create(:customer, :with_transactions, successful: 1, merchant: merchant)
 
-        visit dashboard_merchant_path(merchant)
+        visit merchant_dashboard_path(merchant)
 
         expect(page).not_to have_content("#{not_top.first_name} #{not_top.last_name}")
         within "#top_customers" do
@@ -67,7 +67,7 @@ RSpec.describe "Merchant Dashboard" do
       it "does not include failed transactions with my merchant" do
         not_top = create(:customer, :with_transactions, successful: 1, failed: 7, merchant: merchant)
 
-        visit dashboard_merchant_path(merchant)
+        visit merchant_dashboard_path(merchant)
 
         expect(page).not_to have_content("#{not_top.first_name} #{not_top.last_name}")
       end
@@ -75,7 +75,7 @@ RSpec.describe "Merchant Dashboard" do
       it "does not include successful transactions with other merchants" do
         not_top = create(:customer, :with_transactions, successful: 7)
 
-        visit dashboard_merchant_path(merchant)
+        visit merchant_dashboard_path(merchant)
 
         expect(page).not_to have_content("#{not_top.first_name} #{not_top.last_name}")
       end
@@ -89,7 +89,7 @@ RSpec.describe "Merchant Dashboard" do
         shipped_item = create(:item, :with_status, status: "shipped", merchant: merchant)
         unordered_item = create(:item, merchant: merchant)
 
-        visit dashboard_merchant_path(merchant)
+        visit merchant_dashboard_path(merchant)
 
         within "#items_to_ship" do
           expect(page).to have_content("Items Ready to Ship")
@@ -110,13 +110,13 @@ RSpec.describe "Merchant Dashboard" do
       it 'does not display items of other merchants' do
         item = create(:item)
 
-        visit dashboard_merchant_path(merchant)
+        visit merchant_dashboard_path(merchant)
 
         expect(page).not_to have_content(item.name)
       end
 
       it 'displays items ordered by invoice creation date' do
-        visit dashboard_merchant_path(merchant)
+        visit merchant_dashboard_path(merchant)
 
         invoices = Invoice.order(:created_at)
         expect("Invoice ##{invoices[0].id}").to appear_before("Invoice ##{invoices[1].id}")

@@ -1,6 +1,6 @@
 <h2>Merchant Index</h2>
 <% @merchants.each do |merchant| %>
   <li>
-    <%= link_to merchant.name, dashboard_merchant_path(merchant)%>
+    <%= link_to merchant.name, merchant_dashboard_path(merchant)%>
   </li>
 <% end %>

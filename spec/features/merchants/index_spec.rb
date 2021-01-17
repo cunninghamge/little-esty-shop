@@ -7,7 +7,7 @@ RSpec.describe "Merchant Index" do
     visit merchants_path
 
     Merchant.all.each do |merchant|
-      expect(page).to have_link(merchant.name, href: dashboard_merchant_path(merchant))
+      expect(page).to have_link(merchant.name, href: merchant_dashboard_path(merchant))
     end
   end
 end
