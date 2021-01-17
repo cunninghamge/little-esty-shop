@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 
   def create
     new_user = User.create(user_params)
-    flash[:success] = ["Logged in as testuser"]
+    flash[:success] = ["Welcome, #{new_user.username}!"]
+    session[:user_id] = new_user.id
     redirect_to root_path
   end
 

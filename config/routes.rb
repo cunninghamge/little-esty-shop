@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'welcome#index'
   resources :users, only: [:new, :create]
 
+  resources :items, only: [:index]
+
   resources :merchants do
     member do
       get 'dashboard'

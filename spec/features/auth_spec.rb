@@ -13,7 +13,7 @@ RSpec.describe "User authentication" do
       fill_in("user[password]", with: "testpassword")
       within("form") {click_on("Register")}
 
-      expect(page).to have_content("Logged in as testuser")
+      expect(page).to have_content("Welcome, testuser!")
     end
 
     it "keeps a user logged in after registering" do
@@ -23,11 +23,11 @@ RSpec.describe "User authentication" do
 
       expect(current_path).to eq(new_user_path)
 
-      fill_in("user[:username]", with: "testuser")
-      fill_in("user[:password]", with: "testpassword")
-      click_on("Register")
+      fill_in("user[username]", with: "testuser")
+      fill_in("user[password]", with: "testpassword")
+      within("form") {click_on("Register")}
 
-      expect(page).to have_content("Logged in as testuser")
+      expect(page).to have_content("Welcome, testuser!")
 
       visit '/items'
 
