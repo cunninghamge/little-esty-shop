@@ -7,7 +7,7 @@
     <p><%= format_price(item.unit_price) %></p>
     <%= form_with url: "/cart/#{item.id}", method: :patch, local: true do |f|%>
       <%= f.label :quantity %>
-      <%= f.select :quantity, [1..30] %>
+      <%= f.select :quantity, *[1..30] %>
       <%= f.submit "Add to Cart" %>
     <% end %>
   </section>
