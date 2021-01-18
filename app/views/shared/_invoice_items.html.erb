@@ -14,7 +14,7 @@
     <td style='text-align:right'><%= format_price(invoice_item.item_price) %></td>
     <td><%= invoice_item.quantity %></td>
     <td style='text-align:right'><%= format_price(invoice_item.subtotal) %></td>
-    <td class="discount"><%  if invoice_item.discount_amt != 0 %>
+    <td class="discount"><%  if invoice_item.discount_id %>
       <%= format_price(invoice_item.discount_amt)%><br>
       <%= link_to discount_details(invoice_item.discount), merchant_discount_path(invoice_item.discount) %>
       <% end %></td>

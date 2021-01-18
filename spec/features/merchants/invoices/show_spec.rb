@@ -4,15 +4,14 @@ RSpec.describe "Merchant Invoices show" do
   include ActionView::Helpers::NumberHelper
   include ApplicationHelper
 
-  let(:merchant) {create(:merchant)}
-  let(:customer) {create(:customer)}
-  let(:invoice) {create(:invoice, merchant: merchant, customer: customer)}
-  let!(:invoice_item) {create(:invoice_item, invoice: invoice, quantity: 5,  unit_price: 1, status: 0)}
+  let!(:merchant) {create(:merchant)}
+  let!(:customer) {create(:customer)}
+  let!(:item) {create(:item, merchant: merchant, unit_price: 100)}
+  let!(:invoice) {create(:invoice, merchant: merchant, customer: customer)}
+  let!(:invoice_item) {create(:invoice_item, invoice: invoice, quantity: 5, item: item, unit_price: 100, status: 0)}
 
-  let(:discount_1) {create(:discount_1, merchant: merchant)}
-  let!(:discounted_inv_item) {create(:invoice_item, invoice: invoice, quantity: 11, discount: discount_1)}
-
-  let(:merchant) {create(:merchant)}
+  let!(:discount_1) {create(:discount, merchant: merchant, threshold: 10, percentage: 20)}
+  let!(:discounted_inv_item) {create(:invoice_item, invoice: invoice, item: item, quantity: 10, unit_price: 80, discount: discount_1)}
 
   before(:each) do
     user = create(:user, role: 1, merchant: merchant)

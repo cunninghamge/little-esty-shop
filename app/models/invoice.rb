@@ -9,6 +9,12 @@ class Invoice < ApplicationRecord
 
   delegate :total_revenue, to: :invoice_items
 
+  def populate(cart_contents)
+    cart_contents.each do |item_id, quantity|
+      self.invoice_items.create(item_id: item_id, quantity: quantity, status: 0)
+    end
+  end
+
   def self.incomplete_invoices
     where(status: "in progress").order(created_at: :asc)
   end

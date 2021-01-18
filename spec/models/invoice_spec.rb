@@ -34,6 +34,27 @@ describe Invoice, type: :model do
     end
   end
 
+  describe "#populate" do
+    let!(:merchant_1) {create(:merchant)}
+    let!(:discount_1) {create(:discount, merchant: merchant_1, percentage: 20, threshold: 10)}
+    let!(:discount_2) {create(:discount, merchant: merchant_1, percentage: 30, threshold: 16)}
+    let!(:discount_3) {create(:discount, merchant: merchant_1, percentage: 15, threshold: 15)}
+    let!(:invoice) {create(:invoice, merchant: merchant_1)}
+    let!(:item_1) {create(:item, merchant: merchant_1, unit_price: 10)}
+    let!(:item_2) {create(:item, merchant: merchant_1, unit_price: 10)}
+
+
+    it "creates invoice items with discounts" do
+      invoice.populate({item_1.id => 12, item_2.id => 16})
+
+      expect(invoice.invoice_items.count).to eq(2)
+      expect(invoice.invoice_items[0].item).to eq(item_1)
+      expect(invoice.invoice_items[0].quantity).to eq(12)
+      expect(invoice.invoice_items[1].item).to eq(item_2)
+      expect(invoice.invoice_items[1].quantity).to eq(16)
+    end
+  end
+
   describe "relations" do
     it {should belong_to :customer}
     it {should belong_to :merchant}

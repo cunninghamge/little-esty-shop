@@ -5,8 +5,23 @@ class InvoiceItem < ApplicationRecord
 
   enum status: ["pending", "packaged", "shipped"]
 
+  after_create :get_discount, :set_unit_price
+
   delegate :name, to: :item, prefix: true
   delegate :item_price, to: :item
+
+
+  def get_discount
+    self.discount = Discount.where(merchant_id: item.merchant_id).where("threshold <= ?", quantity).order(percentage: :desc).first
+  end
+
+  def set_unit_price
+    if discount_id
+      self.unit_price = item.unit_price*(1 - discount.percentage/100.0)
+    else
+      self.unit_price = item.unit_price
+    end
+  end
 
   def self.total_revenue
     sum('quantity * unit_price')

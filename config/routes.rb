@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#delete'
+  patch '/cart/:item_id', to: 'cart#update'
 
   resources :items, only: [:index]
+  resources :invoices, only: [:create]
 
   namespace :merchant do
     get '/:id/dashboard', to: 'dashboard#index', as: :dashboard
