@@ -1,1 +1,14 @@
+<h1>Available Items</h1>
 
+<% @items.each do |item| %>
+  <section id="item-<%= item.id %>">
+    <h6><%= item.name %></h6>
+    <p><%= item.description %></p>
+    <p><%= format_price(item.unit_price) %></p>
+    <%= form_with url: "/cart/#{item.id}", method: :patch, local: true do |f|%>
+      <%= f.label :quantity %>
+      <%= f.select :quantity, [1..30] %>
+      <%= f.submit "Add to Cart" %>
+    <% end %>
+  </section>
+<% end %>
