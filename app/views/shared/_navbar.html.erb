@@ -3,6 +3,7 @@
   <%= link_to "Items", items_path %>
   <% if !current_admin? && !current_merchant? %>
     <p>My Cart (<%= cart.items_count %>)</p>
+    <%= button_to "Check Out", invoices_path if cart.items_count > 0 %>
   <% end %>
   <% if current_user %>
     <p>Logged in as <%= current_user.username %></p>

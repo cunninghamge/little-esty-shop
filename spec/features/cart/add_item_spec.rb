@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Cart" do
+RSpec.describe "adding items to cart" do
   it "users can add a single item to their cart" do
     item = create(:item)
 
