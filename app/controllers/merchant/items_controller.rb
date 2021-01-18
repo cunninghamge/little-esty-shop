@@ -21,7 +21,7 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def create
-    @item = @merchant.items.new(item_params.merge(enabled: false))
+    @item = @merchant.items.new(item_params)
     if @item.save
       flash[:notice] = "Successfully Added Item"
       redirect_to merchant_items_path

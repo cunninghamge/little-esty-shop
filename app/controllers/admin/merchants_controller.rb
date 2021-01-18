@@ -26,7 +26,7 @@ class Admin::MerchantsController < Admin::BaseController
   end
 
   def create
-    @merchant = Merchant.new(merchant_params.merge(enabled: false))
+    @merchant = Merchant.new(merchant_params)
     if @merchant.save
       flash[:notice] = "Successfully Added Merchant"
       redirect_to admin_merchants_path
