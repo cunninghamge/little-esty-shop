@@ -42,8 +42,9 @@ describe InvoiceItem, type: :model do
 
     describe "#discount_amount" do
       it "calculates the discount" do
-        discount = create(:discount, threshold: 5, percentage: 10)
-        item = create(:item, unit_price: 10)
+        merchant = create(:merchant)
+        discount = create(:discount, threshold: 5, percentage: 10, merchant: merchant)
+        item = create(:item, unit_price: 10, merchant: merchant)
         invoice_item = create(:invoice_item, quantity: 5, item: item, discount: discount, unit_price: 9)
 
         expect(invoice_item.discount_amt).to eq(-5)
@@ -52,8 +53,9 @@ describe InvoiceItem, type: :model do
 
     describe "#total" do
       it "calculates the total amount due" do
-        discount = create(:discount, threshold: 5, percentage: 10)
-        item = create(:item, unit_price: 10)
+        merchant = create(:merchant)
+        discount = create(:discount, threshold: 5, percentage: 10, merchant: merchant)
+        item = create(:item, unit_price: 10, merchant: merchant)
         invoice_item = create(:invoice_item, quantity: 5, item: item, discount: discount, unit_price: 9)
 
         expect(invoice_item.total).to eq(45)
@@ -72,5 +74,15 @@ describe InvoiceItem, type: :model do
         expect(InvoiceItem.discount_total).to eq(-10)
       end
     end
+  end
+
+  it "finds bulk discounts" do
+    merchant = create(:merchant)
+    discount = create(:discount, merchant: merchant, threshold: 5, percentage: 10)
+    item = create(:item, merchant: merchant, unit_price: 10)
+    invoice = create(:invoice, merchant: merchant, status: 0)
+    invoice_item = invoice.invoice_items.create(item_id: item.id, quantity: 5, status: 0)
+
+    expect(invoice_item.unit_price).to eq(9)
   end
 end
