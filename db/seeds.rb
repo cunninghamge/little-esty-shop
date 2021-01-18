@@ -49,7 +49,7 @@ FactoryBot.create_list(:customer, 197)
 100.times do
   invoice = FactoryBot.create(:invoice, customer: Customer.order('random()').first, created_at: rand(1..10).days.ago)
   rand(1..6).times do
-    FactoryBot.create(:invoice_item, invoice: invoice, item: Item.order('random()').first, created_at: invoice.created_at)
+    invoice_item = FactoryBot.create(:invoice_item, invoice: invoice, item: Item.order('random()').first, created_at: invoice.created_at)
   end
   FactoryBot.create(:transaction, invoice: invoice, result: 0)
 end

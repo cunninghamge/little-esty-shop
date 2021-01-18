@@ -47,11 +47,12 @@ describe Invoice, type: :model do
     it "creates invoice items with discounts" do
       invoice.populate({item_1.id => 12, item_2.id => 16})
 
-      expect(invoice.invoice_items.count).to eq(2)
-      expect(invoice.invoice_items[0].item).to eq(item_1)
-      expect(invoice.invoice_items[0].quantity).to eq(12)
-      expect(invoice.invoice_items[1].item).to eq(item_2)
-      expect(invoice.invoice_items[1].quantity).to eq(16)
+      invoice_items = invoice.invoice_items.order(:quantity)
+      expect(invoice_items.count).to eq(2)
+      expect(invoice_items[0].item).to eq(item_1)
+      expect(invoice_items[0].quantity).to eq(12)
+      expect(invoice_items[1].item).to eq(item_2)
+      expect(invoice_items[1].quantity).to eq(16)
     end
   end
 
