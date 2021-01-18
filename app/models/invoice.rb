@@ -11,7 +11,7 @@ class Invoice < ApplicationRecord
 
   def populate(cart_contents)
     cart_contents.each do |item_id, quantity|
-      self.invoice_items.create(item_id: item_id, quantity: quantity, status: 0)
+      self.invoice_items.create(item_id: item_id, quantity: quantity)
     end
   end
 
