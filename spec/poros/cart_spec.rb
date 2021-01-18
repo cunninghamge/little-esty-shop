@@ -10,13 +10,21 @@ RSpec.describe Cart do
 
   describe "#add_item" do
     it "adds items to the cart" do
-      subject.add_item(1)
+      subject.add_item(1, 1)
+
       expect(subject.contents).to eq({'1'=> 3, '2'=>3})
     end
 
     it "can add an item if it hasn't been added yet" do
-      subject.add_item(3)
+      subject.add_item(3, 1)
+
       expect(subject.contents).to eq({'1'=> 2, '2'=>3, '3'=> 1})
+    end
+
+    it "allows users to select a quantity" do
+      subject.add_item(3, 4)
+
+      expect(subject.contents).to eq({'1'=> 2, '2'=>3, '3'=> 4})
     end
   end
 
