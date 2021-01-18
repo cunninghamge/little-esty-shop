@@ -1,3 +1,4 @@
+<% cache("api") do %>
 <section id="api-block">
   <%= @api_info.repo_name %>
   <ul>
@@ -7,3 +8,4 @@
   </ul>
   <p id="pull-requests">merged pull requests: <%= @api_info.merged_pull_request %></p>
 </section>
+<% end %>

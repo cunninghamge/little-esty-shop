@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+
+table {
+  border: 1px solid lightslategray;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+tr:nth-child(even) {background-color: #c4e3ed}
+
+td {
+  border-left: 1px solid  lightslategray
+}
+.theader {
+  background-color: lightslategray;
+  font-size: 110%;
+}
+.total {
+  font-weight: bold;
+  font-size: 115%;
+  border: 1px solid lightslategray;
+  background-color: #c4e3ed;
+  text-align: right;
+}

@@ -9,6 +9,7 @@ class Item < ApplicationRecord
   scope :disabled, -> {where(enabled: false)}
 
   delegate :top_sales_day, to: :invoices
+  alias_attribute :item_price, :unit_price
 
   def self.items_to_ship
     joins(:invoices)
