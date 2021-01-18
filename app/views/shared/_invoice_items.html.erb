@@ -16,10 +16,10 @@
     <td style='text-align:right'><%= format_price(invoice_item.subtotal) %></td>
     <td class="discount"><%  if invoice_item.discount_amt != 0 %>
       <%= format_price(invoice_item.discount_amt)%><br>
-      <%= link_to discount_details(invoice_item.discount), discount_path(invoice_item.discount) %>
+      <%= link_to discount_details(invoice_item.discount), merchant_discount_path(invoice_item.discount) %>
       <% end %></td>
     <td style='text-align:right'><%= format_price(invoice_item.total) %></td>
-    <td><%= form_with model: [@merchant, invoice_item], local: true do |f| %>
+    <td><%= form_with model: [:merchant, invoice_item], local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], selected: invoice_item.status%>
           <%= f.submit "Update Item Status" %>
         <% end %></td>

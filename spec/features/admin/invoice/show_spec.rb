@@ -5,6 +5,8 @@ RSpec.describe "admin invoices show page" do
   include ApplicationHelper
 
   before :each do
+    user = create(:user, role: 2)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     @invoice = FactoryBot.create(:invoice)
     FactoryBot.create_list(:invoice_item, 4, invoice_id: @invoice.id )
     visit admin_invoice_path(@invoice.id)

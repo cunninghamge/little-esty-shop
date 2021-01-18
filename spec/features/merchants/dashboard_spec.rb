@@ -1,55 +1,60 @@
 require "rails_helper"
 
 RSpec.describe "Merchant Dashboard" do
-  let(:merchant) {create(:merchant)}
-  let(:visit_path) {visit dashboard_merchant_path(merchant)}
+  before(:each) do
+    @merchant = create(:merchant)
+    user = create(:user, role: 1, merchant: @merchant)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+  end
+
+  let(:visit_path) {visit merchant_dashboard_path(@merchant)}
 
   describe "displays" do
     it "the merchant name" do
-      visit dashboard_merchant_path(merchant)
+      visit_path
 
-      expect(page).to have_content(merchant.name)
+      expect(page).to have_content(@merchant.name)
     end
 
     it "link to merchant's item index" do
-      visit dashboard_merchant_path(merchant)
+      visit_path
 
       click_link "My Items"
 
-      expect(current_path).to eq(merchant_items_path(merchant))
+      expect(current_path).to eq(merchant_items_path(@merchant))
     end
 
     it "link to merchant's invoices index" do
-      visit dashboard_merchant_path(merchant)
+      visit_path
 
       click_link "My Invoices"
 
-      expect(current_path).to eq(merchant_invoices_path(merchant))
+      expect(current_path).to eq(merchant_invoices_path(@merchant))
     end
 
     it "link to merchants discounts index" do
-      visit dashboard_merchant_path(merchant)
+      visit_path
 
       click_link "My Discounts"
 
-      expect(current_path).to eq(merchant_discounts_path(merchant))
+      expect(current_path).to eq(merchant_discounts_path(@merchant))
     end
   end
 
   describe "has section for" do
     describe "Favorite Customers" do
       let!(:top_customers)  {[
-          create(:customer, :with_transactions, successful: 6, merchant: merchant),
-          create(:customer, :with_transactions, successful: 5, merchant: merchant),
-          create(:customer, :with_transactions, successful: 4, merchant: merchant),
-          create(:customer, :with_transactions, successful: 3, merchant: merchant),
-          create(:customer, :with_transactions, successful: 2, merchant: merchant),
+          create(:customer, :with_transactions, successful: 6, merchant: @merchant),
+          create(:customer, :with_transactions, successful: 5, merchant: @merchant),
+          create(:customer, :with_transactions, successful: 4, merchant: @merchant),
+          create(:customer, :with_transactions, successful: 3, merchant: @merchant),
+          create(:customer, :with_transactions, successful: 2, merchant: @merchant),
         ]}
 
       it "listing the top 5 customers, with purchase counts, in order" do
-        not_top = create(:customer, :with_transactions, successful: 1, merchant: merchant)
+        not_top = create(:customer, :with_transactions, successful: 1, merchant: @merchant)
 
-        visit dashboard_merchant_path(merchant)
+        visit_path
 
         expect(page).not_to have_content("#{not_top.first_name} #{not_top.last_name}")
         within "#top_customers" do
@@ -65,9 +70,9 @@ RSpec.describe "Merchant Dashboard" do
       end
 
       it "does not include failed transactions with my merchant" do
-        not_top = create(:customer, :with_transactions, successful: 1, failed: 7, merchant: merchant)
+        not_top = create(:customer, :with_transactions, successful: 1, failed: 7, merchant: @merchant)
 
-        visit dashboard_merchant_path(merchant)
+        visit_path
 
         expect(page).not_to have_content("#{not_top.first_name} #{not_top.last_name}")
       end
@@ -75,21 +80,21 @@ RSpec.describe "Merchant Dashboard" do
       it "does not include successful transactions with other merchants" do
         not_top = create(:customer, :with_transactions, successful: 7)
 
-        visit dashboard_merchant_path(merchant)
+        visit_path
 
         expect(page).not_to have_content("#{not_top.first_name} #{not_top.last_name}")
       end
     end
 
     describe 'items ready to ship' do
-      let!(:ready_to_ship) {create_list(:item, 4, :with_status, status: "packaged", merchant: merchant)}
+      let!(:ready_to_ship) {create_list(:item, 4, :with_status, status: "packaged", merchant: @merchant)}
 
       it 'displays items with invoice_item status pending' do
-        pending_item = create(:item, :with_status, status: "pending", merchant: merchant)
-        shipped_item = create(:item, :with_status, status: "shipped", merchant: merchant)
-        unordered_item = create(:item, merchant: merchant)
+        pending_item = create(:item, :with_status, status: "pending", merchant: @merchant)
+        shipped_item = create(:item, :with_status, status: "shipped", merchant: @merchant)
+        unordered_item = create(:item, merchant: @merchant)
 
-        visit dashboard_merchant_path(merchant)
+        visit_path
 
         within "#items_to_ship" do
           expect(page).to have_content("Items Ready to Ship")
@@ -98,7 +103,7 @@ RSpec.describe "Merchant Dashboard" do
               expect(page).to have_content(item.name)
               invoice = item.invoices[0]
               expect(page).to have_link("Invoice ##{invoice.id}",
-                href: merchant_invoice_path(merchant.id, invoice.id))
+                href: merchant_invoice_path(@merchant.id, invoice.id))
               expect(page).to have_content(invoice.created_at.strftime("%A, %B %-d, %Y"))
             end
           expect(page).not_to have_content(pending_item.name)
@@ -110,13 +115,13 @@ RSpec.describe "Merchant Dashboard" do
       it 'does not display items of other merchants' do
         item = create(:item)
 
-        visit dashboard_merchant_path(merchant)
+        visit_path
 
         expect(page).not_to have_content(item.name)
       end
 
       it 'displays items ordered by invoice creation date' do
-        visit dashboard_merchant_path(merchant)
+        visit_path
 
         invoices = Invoice.order(:created_at)
         expect("Invoice ##{invoices[0].id}").to appear_before("Invoice ##{invoices[1].id}")

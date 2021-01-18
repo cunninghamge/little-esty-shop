@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_16_051659) do
+ActiveRecord::Schema.define(version: 2021_01_17_225806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,10 +84,22 @@ ActiveRecord::Schema.define(version: 2021_01_16_051659) do
     t.index ["invoice_id"], name: "index_transactions_on_invoice_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.integer "role", default: 0
+    t.bigint "merchant_id"
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_users_on_customer_id"
+    t.index ["merchant_id"], name: "index_users_on_merchant_id"
+  end
+
   add_foreign_key "discounts", "merchants"
   add_foreign_key "invoice_items", "invoices"
   add_foreign_key "invoice_items", "items"
   add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "merchants"
   add_foreign_key "items", "merchants"
+  add_foreign_key "users", "customers"
+  add_foreign_key "users", "merchants"
 end

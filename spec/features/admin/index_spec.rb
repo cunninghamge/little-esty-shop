@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Dashboard" do
+  before(:each) do
+    user = create(:user, role: 2)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+  end
+  
   describe "visit admin dashboard" do
     it "can see a header indicating admin dashboard" do
       visit "/admin"

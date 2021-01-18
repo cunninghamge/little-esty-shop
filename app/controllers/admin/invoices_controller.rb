@@ -1,4 +1,4 @@
-class Admin::InvoicesController < ApplicationController
+class Admin::InvoicesController < Admin::BaseController
   def index
     @invoices = Invoice.order(:id)
   end
