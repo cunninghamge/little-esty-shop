@@ -1,6 +1,5 @@
 class Merchant::ItemsController < Merchant::BaseController
   before_action :get_item, only: [:show, :edit, :update, :enable]
-  before_action :get_merchant, only: [:index, :new, :create]
 
   def index
     @items = @merchant.items
@@ -35,10 +34,6 @@ class Merchant::ItemsController < Merchant::BaseController
   private
   def get_item
     @item = Item.find(params[:id])
-  end
-
-  def get_merchant
-    @merchant = current_user.merchant
   end
 
   def item_params
