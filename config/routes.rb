@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :admin, shallow: true do
     get '/', to: 'dashboard#index'
+    patch '/merchants/:id/enable', to: 'merchants#enable', as: :merchant_enable
     resources :merchants
     resources :invoices, only: [:index, :show, :update]
   end
