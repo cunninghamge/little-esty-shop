@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "adding items to cart" do
   it "users can add a single item to their cart" do
-    item = create(:item)
+    item = create(:item, enabled: true)
 
     visit items_path
 
@@ -12,7 +12,7 @@ RSpec.describe "adding items to cart" do
   end
 
   it "users can select a quantity" do
-    item = create(:item)
+    item = create(:item, enabled: true)
 
     visit items_path
 
@@ -25,8 +25,8 @@ RSpec.describe "adding items to cart" do
   end
 
   it "users can add multiple different items" do
-    item_1 = create(:item)
-    item_2 = create(:item)
+    item_1 = create(:item, enabled: true)
+    item_2 = create(:item, enabled: true)
 
     visit items_path
 

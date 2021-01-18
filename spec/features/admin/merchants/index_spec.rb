@@ -4,8 +4,8 @@ describe "Admin Merchants Index Page" do
   before :each do
     user = create(:user, role: 2)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    @merchants = create_list(:merchant,5)
-    @disabled_merchants = create_list(:merchant,5,enabled: false)
+    @merchants = create_list(:merchant,5,enabled: true)
+    @disabled_merchants = create_list(:merchant,5)
     visit "/admin/merchants"
   end
 

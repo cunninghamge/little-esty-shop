@@ -5,7 +5,7 @@ RSpec.describe "Items Index" do
   include ActionView::Helpers::NumberHelper
 
   it "lists all of the items" do
-    items = create_list(:item, 3)
+    items = create_list(:item, 3, enabled: true)
     visit items_path
 
     items.each do |item|
