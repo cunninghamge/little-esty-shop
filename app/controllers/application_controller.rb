@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :call_github
 
-  helper_method :current_user, :current_admin?, :current_merchant?
+  helper_method :current_user, :current_admin?, :current_merchant?, :cart
 
   def call_github
     @api_info = ApiSearch.instance
@@ -17,5 +17,9 @@ class ApplicationController < ActionController::Base
 
   def current_merchant?
     current_user && current_user.merchant_id
+  end
+
+  def cart
+    @cart ||= Cart.new(session[:cart])
   end
 end

@@ -10,7 +10,7 @@ class Cart
   end
 
   def add_item(id, quantity)
-    @contents[id.to_s] = count_of(id) + quantity
+    @contents[id.to_s] = count_of(id) + quantity.to_i
   end
 
   def count_of(id)
