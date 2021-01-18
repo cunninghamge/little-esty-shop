@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Merchant Dashboard" do
-  let!(:merchant) {create(:merchant)}
+  let(:merchant) {create(:merchant)}
+  let(:visit_path) {visit dashboard_merchant_path(merchant)}
 
   describe "displays" do
     it "the merchant name" do
@@ -24,6 +25,14 @@ RSpec.describe "Merchant Dashboard" do
       click_link "My Invoices"
 
       expect(current_path).to eq(merchant_invoices_path(merchant))
+    end
+
+    it "link to merchants discounts index" do
+      visit dashboard_merchant_path(merchant)
+
+      click_link "My Discounts"
+
+      expect(current_path).to eq(merchant_discounts_path(merchant))
     end
   end
 
