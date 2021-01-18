@@ -16,10 +16,10 @@ class Merchant::DiscountsController < Merchant::BaseController
     @merchant = current_user.merchant
     @discount = @merchant.discounts.new(discount_params)
     if @discount.save
-      flash.notice = ["Discount Successfully Added"]
+      flash[:notice] = "Discount Successfully Added"
       redirect_to merchant_discounts_path(@merchant)
     else
-      flash.alert = @discount.errors.full_messages
+      flash[:errors] = @discount.errors.full_messages
       render :new, obj: [@merchant, @discount]
     end
   end
@@ -30,13 +30,13 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def update
     Discount.find(params[:id]).update(discount_params)
-    flash.notice = ["Discount has been updated!"]
+    flash[:notice] = "Discount has been updated!"
     redirect_to merchant_discount_path(params[:id])
   end
 
   def destroy
     Discount.find(params[:id]).destroy
-    flash.notice = ["Discount Deleted"]
+    flash[:notice] = "Discount Deleted"
     redirect_to merchant_discounts_path
   end
 

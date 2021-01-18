@@ -16,7 +16,7 @@ class Admin::MerchantsController < Admin::BaseController
   def update
     merchant = Merchant.find(params[:id])
     if merchant.update(merchant_params)
-      flash.notice = ["Successfully Updated Info"]
+      flash[:notice] = "Successfully Updated Info"
       if params[:merchant][:name]
         destination = admin_merchant_path(params[:id])
       else
@@ -24,7 +24,7 @@ class Admin::MerchantsController < Admin::BaseController
       end
       redirect_to destination
     else
-      flash.alert = merchant.errors.full_messages
+      flash[:errors] = merchant.errors.full_messages
       @merchant = merchant
       render "edit"
     end
@@ -37,10 +37,10 @@ class Admin::MerchantsController < Admin::BaseController
   def create
     merchant = Merchant.new(merchant_params.merge(enabled: false))
     if merchant.save
-      flash.notice = ["Successfully Added Merchant"]
+      flash[:notice] = "Successfully Added Merchant"
       redirect_to admin_merchants_path
     else
-      flash.alert = merchant.errors.full_messages
+      flash[:errors] = merchant.errors.full_messages
       render "new"
     end
   end

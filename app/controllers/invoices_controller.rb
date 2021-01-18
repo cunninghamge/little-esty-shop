@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
     invoice = customer.invoices.create(merchant: merchant, status: 0)
     invoice.populate(cart.contents)
     session.delete(:cart)
-    flash[:notice] = ["Order Submitted"]
+    flash[:notice] = "Order Submitted"
     redirect_to root_path
   end
 end
