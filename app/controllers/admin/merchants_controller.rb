@@ -1,5 +1,6 @@
 class Admin::MerchantsController < Admin::BaseController
   before_action :get_merchant, only: [:show, :edit, :update, :enable]
+  
   def index
     @enabled_merchants = Merchant.where(enabled: true)
     @disabled_merchants = Merchant.where(enabled: false)
