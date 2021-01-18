@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   resources :items, only: [:index]
   resources :invoices, only: [:create]
 
-  namespace :merchant do
+  namespace :merchant, shallow: true do
     get '/:id/dashboard', to: 'dashboard#index', as: :dashboard
-    resources :discounts, shallow: true
-    resources :items, except: [:destroy], shallow: true
+    resources :discounts
+    resources :items, except: [:destroy]
     resources :invoices, only: [:index, :show]
     resources :invoice_items, only: [:update]
   end
