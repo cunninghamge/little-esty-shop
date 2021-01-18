@@ -1,18 +1,19 @@
 class Merchant::ItemsController < Merchant::BaseController
-  before_action :get_item, only: [:show, :edit]
+  before_action :get_item, only: [:show, :edit, :update, :enable]
 
   def index
     @items = current_user.merchant.items
   end
 
   def update
-    get_item.update(item_params)
-    if params[:item][:enabled]
-      redirect_to merchant_items_path(params[:merchant_id])
-    else
-      flash[:notice] = "Item has been updated!"
-      redirect_to merchant_item_path(@item)
-    end
+    @item.update(item_params)
+    flash[:notice] = "Item has been updated!"
+    redirect_to merchant_item_path(@item)
+  end
+
+  def enable
+    @item.update(item_params)
+    redirect_to merchant_items_path(params[:merchant_id])
   end
 
   def new

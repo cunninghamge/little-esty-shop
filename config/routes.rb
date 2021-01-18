@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   namespace :merchant, shallow: true do
     get '/:id/dashboard', to: 'dashboard#index', as: :dashboard
+    patch '/:id/items/:id/enable', to: 'items#enable', as: :item_enable
     resources :discounts
     resources :items, except: [:destroy]
     resources :invoices, only: [:index, :show]
