@@ -1,6 +1,6 @@
 class Admin::InvoicesController < Admin::BaseController
   before_action :get_invoice, only: [:show, :update]
-  
+
   def index
     @invoices = Invoice.order(:id)
   end
@@ -12,7 +12,7 @@ class Admin::InvoicesController < Admin::BaseController
 
   def update
     @invoice.update(invoice_params)
-    redirect_to admin_invoice_path(invoice)
+    redirect_to admin_invoice_path(@invoice)
   end
 
   private

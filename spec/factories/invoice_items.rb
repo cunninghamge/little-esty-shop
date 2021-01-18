@@ -4,8 +4,6 @@ FactoryBot.define do
     association :invoice
     quantity { Faker::Number.between(from: 1, to: 10) }
     unit_price { Faker::Number.between(from: 50, to: 100000) }
-    status {["pending", "packaged", "shipped"].sample}
-
 
     trait :sequenced do
       sequence :quantity

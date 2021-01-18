@@ -10,7 +10,6 @@ class InvoiceItem < ApplicationRecord
   delegate :name, to: :item, prefix: true
   delegate :item_price, to: :item
 
-
   def get_discount
     self.discount = Discount.where(merchant_id: item.merchant_id).where("threshold <= ?", quantity).order(percentage: :desc).first
   end
