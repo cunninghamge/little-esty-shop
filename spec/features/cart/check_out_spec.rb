@@ -32,4 +32,13 @@ RSpec.describe "checking out" do
     expect(customer.invoices.count).to eq(1)
     expect(customer.invoices[0].invoice_items.count).to eq(1)
   end
+
+  it "prompts the user to log in or register if checking out as a visitor" do
+    cart = Cart.new({'1'=> 2, '2'=>3})
+    allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
+    visit root_path
+    click_button("Check Out")
+
+    expect(page).to have_content("Please log in or create a new account")
+  end
 end

@@ -10,24 +10,22 @@
   </head>
 
   <body>
-    <div class="container main"> 
+    <div class="container main">
       <%= render 'shared/navbar' %>
-
-      <div>
-        <ul id="flash-messages" >
-          <% flash.each do |notice, messages| %>
-            <% if notice == "errors" %>
-              <% messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            <% else %>
-              <%= messages %>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
-
       <div class="container content">
+        <div>
+          <ul id="flash-messages" >
+            <% flash.each do |notice, messages| %>
+              <% if notice == "errors" %>
+                <% messages.each do |message| %>
+                  <li class="alert alert-danger"><%= message %></li>
+                <% end %>
+              <% else %>
+                <p class="alert alert-primary"><%= messages %></p>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
         <%= yield %>
       </div>
     </div>
