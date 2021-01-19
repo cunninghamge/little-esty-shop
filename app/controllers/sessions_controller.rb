@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:notice] = "Welcome, #{user.username}!"
-      redirect_to root_path
+      redirect_to redirect_path
     else
       flash[:alert] = "Invalid username or password"
       render :new
@@ -15,5 +15,16 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     flash[:notice] = "Successfully logged out"
     redirect_to root_path
+  end
+
+  private
+  def redirect_path
+    if current_admin?
+      admin_path
+    elsif current_merchant?
+      merchant_dashboard_path(current_user.merchant)
+    else
+      root_path
+    end
   end
 end

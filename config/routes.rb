@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#delete'
   patch '/cart/:item_id', to: 'cart#update'
 
-  resources :items, only: [:index]
   resources :invoices, only: [:create]
 
   namespace :merchant, shallow: true do
