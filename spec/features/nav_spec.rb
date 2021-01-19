@@ -7,15 +7,14 @@ RSpec.describe "navigation bar" do
     it "visitor" do
       visit root_path
 
-      within("#nav") do
-        expect(page).to have_link("Home", href: root_path)
-        expect(page).to have_link("Items", href: items_path)
+      within("nav") do
+        expect(page).to have_link(href: root_path)
         expect(page).to have_link("Log In", href: login_path)
         expect(page).to have_link("Register", href: new_user_path)
         expect(page).to have_content("My Cart (0)")
 
-        expect(page).not_to have_link("Dashboard", href: merchant_dashboard_path(merchant))
-        expect(page).not_to have_link("Dashboard", href: admin_path)
+        expect(page).not_to have_link(href: merchant_dashboard_path(merchant))
+        expect(page).not_to have_link(href: admin_path)
         expect(page).not_to have_content("Logged in")
         expect(page).not_to have_link("Log Out")
       end
@@ -28,15 +27,14 @@ RSpec.describe "navigation bar" do
 
       visit root_path
 
-      within("#nav") do
-        expect(page).to have_link("Home", href: root_path)
-        expect(page).to have_link("Items", href: items_path)
+      within("nav") do
+        expect(page).to have_link(href: root_path)
         expect(page).to have_content("Logged in as #{user.username}")
         expect(page).to have_link("Log Out", href: logout_path)
         expect(page).to have_content("My Cart (0)")
 
-        expect(page).not_to have_link("Dashboard", href: merchant_dashboard_path(merchant))
-        expect(page).not_to have_link("Dashboard", href: admin_path)
+        expect(page).not_to have_link(href: merchant_dashboard_path(merchant))
+        expect(page).not_to have_link(href: admin_path)
         expect(page).not_to have_link("Log In")
         expect(page).not_to have_link("Register")
       end
@@ -49,14 +47,12 @@ RSpec.describe "navigation bar" do
 
       visit merchant_dashboard_path(merchant)
 
-      within("#nav") do
-        expect(page).to have_link("Home", href: root_path)
-        expect(page).to have_link("Items")
-        expect(page).to have_link("Dashboard", href: merchant_dashboard_path(merchant))
+      within("nav") do
+        expect(page).to have_link(href: merchant_dashboard_path(merchant))
         expect(page).to have_content("Logged in as #{user.username}")
         expect(page).to have_link("Log Out", href: logout_path)
 
-        expect(page).not_to have_link("Dashboard", href: admin_path)
+        expect(page).not_to have_link(href: admin_path)
         expect(page).not_to have_content("My Cart (0)")
         expect(page).not_to have_link("Log In")
         expect(page).not_to have_link("Register")
@@ -70,14 +66,12 @@ RSpec.describe "navigation bar" do
 
       visit admin_path
 
-      within("#nav") do
-        expect(page).to have_link("Home", href: root_path)
-        expect(page).to have_link("Items")
-        expect(page).to have_link("Dashboard", href: admin_path)
+      within("nav") do
+        expect(page).to have_link(href: admin_path)
         expect(page).to have_content("Logged in as #{user.username}")
         expect(page).to have_link("Log Out", href: logout_path)
 
-        expect(page).not_to have_link("Dashboard", href: merchant_dashboard_path(merchant))
+        expect(page).not_to have_link(href: merchant_dashboard_path(merchant))
         expect(page).not_to have_link("Log In")
         expect(page).not_to have_link("Register")
         expect(page).not_to have_content("My Cart (0)")

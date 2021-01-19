@@ -6,7 +6,7 @@ RSpec.describe "Items Index" do
 
   it "lists all of the items" do
     items = create_list(:item, 3, enabled: true)
-    visit items_path
+    visit root_path
 
     items.each do |item|
       within("#item-#{item.id}") do
@@ -23,7 +23,7 @@ RSpec.describe "Items Index" do
     enabled_item = create(:item, enabled: true)
     disabled_item = create(:item, enabled: false)
 
-    visit items_path
+    visit root_path
 
     expect(page).to have_css("#item-#{enabled_item.id}")
     expect(page).not_to have_css("#item-#{disabled_item.id}")

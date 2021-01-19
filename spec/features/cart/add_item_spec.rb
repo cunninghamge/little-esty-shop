@@ -4,7 +4,7 @@ RSpec.describe "adding items to cart" do
   it "users can add a single item to their cart" do
     item = create(:item, enabled: true)
 
-    visit items_path
+    visit root_path
 
     within("#item-#{item.id}") {click_button("Add to Cart")}
 
@@ -14,7 +14,7 @@ RSpec.describe "adding items to cart" do
   it "users can select a quantity" do
     item = create(:item, enabled: true)
 
-    visit items_path
+    visit root_path
 
     within("#item-#{item.id}") do
       select(2, from: :quantity)
@@ -28,7 +28,7 @@ RSpec.describe "adding items to cart" do
     item_1 = create(:item, enabled: true)
     item_2 = create(:item, enabled: true)
 
-    visit items_path
+    visit root_path
 
     within("#item-#{item_1.id}") {click_button("Add to Cart")}
     within("#item-#{item_2.id}") {click_button("Add to Cart")}

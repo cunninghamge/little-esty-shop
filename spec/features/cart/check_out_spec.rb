@@ -5,13 +5,13 @@ RSpec.describe "checking out" do
     it "users see a button to check out" do
       cart = Cart.new({'1'=> 2, '2'=>3})
       allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
-      visit items_path
+      visit root_path
 
       expect(page).to have_button("Check Out")
     end
 
     it "does not allow the user to check out if the cart is empty" do
-      visit items_path
+      visit root_path
 
       expect(page).not_to have_button("Check Out")
     end
@@ -24,7 +24,7 @@ RSpec.describe "checking out" do
     user = create(:user, role: 0, customer: customer)
     allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    visit items_path
+    visit root_path
 
     click_button("Check Out")
 
