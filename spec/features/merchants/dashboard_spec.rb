@@ -103,7 +103,7 @@ RSpec.describe "Merchant Dashboard" do
               expect(page).to have_content(item.name)
               invoice = item.invoices[0]
               expect(page).to have_link("Invoice ##{invoice.id}",
-                href: merchant_invoice_path(@merchant.id, invoice.id))
+                href: merchant_invoice_path(invoice.id))
               expect(page).to have_content(invoice.created_at.strftime("%A, %B %-d, %Y"))
             end
           expect(page).not_to have_content(pending_item.name)

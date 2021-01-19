@@ -1,33 +1,32 @@
 class Merchant::ItemsController < Merchant::BaseController
-  before_action :get_item, only: [:show, :edit]
+  before_action :get_item, only: [:show, :edit, :update, :enable]
 
   def index
-    @items = current_user.merchant.items
+    @items = @merchant.items
   end
 
   def update
-    get_item.update(item_params)
-    if params[:item][:enabled]
-      redirect_to merchant_items_path(params[:merchant_id])
-    else
-      flash.notice = ["Item has been updated!"]
-      redirect_to merchant_item_path(@item)
-    end
+    @item.update(item_params)
+    flash[:notice] = "Item has been updated!"
+    redirect_to merchant_item_path(@item)
+  end
+
+  def enable
+    @item.update(item_params)
+    redirect_to merchant_items_path(params[:merchant_id])
   end
 
   def new
-    @merchant = current_user.merchant
     @item = Item.new
   end
 
   def create
-    @merchant = current_user.merchant
-    @item = @merchant.items.new(item_params.merge(enabled: false))
+    @item = @merchant.items.new(item_params)
     if @item.save
-      flash.notice = ["Successfully Added Item"]
+      flash[:notice] = "Successfully Added Item"
       redirect_to merchant_items_path
     else
-      flash.alert = @item.errors.full_messages
+      flash[:errors] = @item.errors.full_messages
       render :new, obj: [@merchant, @item]
     end
   end

@@ -10,26 +10,18 @@ Rails.application.routes.draw do
   resources :items, only: [:index]
   resources :invoices, only: [:create]
 
-  namespace :merchant do
+  namespace :merchant, shallow: true do
     get '/:id/dashboard', to: 'dashboard#index', as: :dashboard
-    resources :discounts, shallow: true
-    resources :items, except: [:destroy], shallow: true
+    patch '/:id/items/:id/enable', to: 'items#enable', as: :item_enable
+    resources :discounts
+    resources :items, except: [:destroy]
     resources :invoices, only: [:index, :show]
     resources :invoice_items, only: [:update]
   end
 
-  # resources :merchants do
-  #   scope module: "merchants" do
-  #     resources :discounts, shallow: true
-  #     resources :items, only: :update
-  #     resources :items, except: [:destroy], shallow: true
-  #     resources :invoices, only: [:index, :show]
-  #     resources :invoice_items, only: [:update]
-  #   end
-  # end
-
   namespace :admin, shallow: true do
     get '/', to: 'dashboard#index'
+    patch '/merchants/:id/enable', to: 'merchants#enable', as: :merchant_enable
     resources :merchants
     resources :invoices, only: [:index, :show, :update]
   end

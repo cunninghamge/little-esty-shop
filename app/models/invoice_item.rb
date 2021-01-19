@@ -10,16 +10,15 @@ class InvoiceItem < ApplicationRecord
   delegate :name, to: :item, prefix: true
   delegate :item_price, to: :item
 
-
   def get_discount
-    self.discount = Discount.where(merchant_id: item.merchant_id).where("threshold <= ?", quantity).order(percentage: :desc).first
+    self.update(discount: Discount.where(merchant_id: item.merchant_id).where("threshold <= ?", quantity).order(percentage: :desc).first)
   end
 
   def set_unit_price
-    if discount_id
-      self.unit_price = item.unit_price*(1 - discount.percentage/100.0)
+    if self.discount_id
+      self.update!(unit_price: item.unit_price*(1 - discount.percentage/100.0))
     else
-      self.unit_price = item.unit_price
+      self.update!(unit_price: item.unit_price)
     end
   end
 

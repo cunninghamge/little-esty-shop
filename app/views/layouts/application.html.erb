@@ -13,12 +13,16 @@
     <%= render 'shared/navbar' %>
     <ul id="flash-messages" >
       <% flash.each do |notice, messages| %>
-        <% messages.each do |message| %>
-          <li><%= message %></li>
+        <% if notice == "errors" %>
+          <% messages.each do |message| %>
+            <li><%= message %></li>
           <% end %>
+        <% else %>
+          <%= messages %>
+        <% end %>
       <% end %>
     </ul>
-    
+
     <%= yield %>
   </body>
 

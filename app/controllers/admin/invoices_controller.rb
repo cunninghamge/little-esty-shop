@@ -1,21 +1,25 @@
 class Admin::InvoicesController < Admin::BaseController
+  before_action :get_invoice, only: [:show, :update]
+
   def index
     @invoices = Invoice.order(:id)
   end
 
   def show
-    @invoice = Invoice.find(params[:id])
     @merchant = @invoice.merchant
     @invoice_items = @invoice.invoice_items
   end
 
   def update
-    invoice = Invoice.find(params[:id])
-    invoice.update(invoice_params)
-    redirect_to admin_invoice_path(invoice)
+    @invoice.update(invoice_params)
+    redirect_to admin_invoice_path(@invoice)
   end
 
   private
+  def get_invoice
+    @invoice = Invoice.find(params[:id])
+  end
+
   def invoice_params
     params.permit(:status)
   end

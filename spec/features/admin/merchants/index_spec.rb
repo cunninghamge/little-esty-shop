@@ -4,8 +4,8 @@ describe "Admin Merchants Index Page" do
   before :each do
     user = create(:user, role: 2)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    @merchants = create_list(:merchant,5)
-    @disabled_merchants = create_list(:merchant,5,enabled: false)
+    @merchants = create_list(:merchant,5,enabled: true)
+    @disabled_merchants = create_list(:merchant,5)
     visit "/admin/merchants"
   end
 
@@ -70,7 +70,8 @@ describe "Admin Merchants Index Page" do
       merchants[i] = create(:merchant)
       invoice1 = create(:invoice, merchant_id: merchants[i].id)
       item1 = create(:item, merchant_id: merchants[i].id)
-      invoice_item1 = create(:invoice_item, quantity: 1, unit_price: 100000-100*i, invoice_id: invoice1.id, item_id: item1.id)
+      invoice_item1 = create(:invoice_item, quantity: 1, invoice_id: invoice1.id, item_id: item1.id)
+      invoice_item1.update(unit_price: 100000-100*i)
       transaction1 = create(:transaction, invoice_id: invoice1.id, result: 0)
     end
     visit admin_merchants_path

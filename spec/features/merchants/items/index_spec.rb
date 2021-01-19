@@ -113,8 +113,8 @@ RSpec.describe "Items Index" do
 
   describe "lists enabled/disabled items" do
     it "grouped by status" do
-      enabled_item = create(:item, merchant: @merchant)
-      disabled_item = create(:item, merchant: @merchant, enabled: false)
+      enabled_item = create(:item, merchant: @merchant, enabled: true)
+      disabled_item = create(:item, merchant: @merchant)
 
       visit merchant_items_path(@merchant)
 
@@ -125,7 +125,7 @@ RSpec.describe "Items Index" do
     end
 
    it 'with buttons to disable/enable items' do
-      item = create(:item, merchant: @merchant)
+      item = create(:item, merchant: @merchant, enabled: true)
 
       visit merchant_items_path(@merchant)
 

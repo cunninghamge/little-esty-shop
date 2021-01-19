@@ -3,7 +3,7 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions
   belongs_to :customer
-  belongs_to :merchant
+  belongs_to :merchant, optional: true
 
   enum status: ['in progress', 'completed', 'cancelled']
 
@@ -11,7 +11,7 @@ class Invoice < ApplicationRecord
 
   def populate(cart_contents)
     cart_contents.each do |item_id, quantity|
-      self.invoice_items.create(item_id: item_id, quantity: quantity, status: 0)
+      self.invoice_items.create(item_id: item_id, quantity: quantity)
     end
   end
 
