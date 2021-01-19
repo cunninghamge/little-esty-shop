@@ -1,0 +1,103 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+@import "bootstrap";
+
+body {
+  padding-top: 120px;
+}
+.nav-item {
+  color: white;
+  margin-top: 10px;
+  margin-right: 50px;
+}
+
+.btn-light {
+  border-radius: 50%
+}
+.navbar {
+  height: 90px;
+}
+
+#navbar-text {
+  color: white;
+  font-size: 18px;
+}
+#counter {
+  font-size: 25px;
+  font-weight: bold;
+}
+#cart {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+#logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid red;
+}
+#main-logo {
+  width: 110%;
+  height: 110%;
+}
+footer {
+  color: white;
+  height: 100px;
+  h4 {
+    font-size: 18px;
+    margin: 3px;
+  }
+  h5, li, span {
+    font-size: 14px;
+    margin: 2px;
+  }
+}
+#contributors {
+  column-count: 4;
+}
+#gh-link {
+  color: white
+}
+// invoices table
+table {
+  border: 1px solid lightslategray;
+  border-collapse: collapse;
+  text-align: center;
+}
+.item {
+  border: 1px solid black;
+  padding: 30px;
+  border-radius: 10px;
+}
+h1 {
+  padding-top: 15px;
+  text-align: center;
+}
+tr:nth-child(even) {background-color: #c4e3ed}
+
+td {
+  border-left: 1px solid  lightslategray
+}
+.theader {
+  background-color: lightslategray;
+  font-size: 110%;
+}
+.total {
+  font-weight: bold;
+  font-size: 115%;
+  border: 1px solid lightslategray;
+  background-color: #c4e3ed;
+  text-align: right;
+}

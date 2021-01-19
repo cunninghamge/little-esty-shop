@@ -10,23 +10,22 @@
   </head>
 
   <body>
-    <%= render 'shared/navbar' %>
-    <ul id="flash-messages" >
-      <% flash.each do |notice, messages| %>
-        <% if notice == "errors" %>
-          <% messages.each do |message| %>
-            <li><%= message %></li>
+      <%= render 'shared/navbar' %>
+      <ul id="flash-messages" >
+        <% flash.each do |notice, messages| %>
+          <% if notice == "errors" %>
+            <% messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          <% else %>
+            <%= messages %>
           <% end %>
-        <% else %>
-          <%= messages %>
         <% end %>
-      <% end %>
-    </ul>
-
-    <%= yield %>
+      </ul>
+      <div class="container main">
+        <%= yield %>
+      </div>
   </body>
 
-  <footer>
-    <%= render 'shared/api' %>
-  </footer>
+  <%= render 'shared/api' %>
 </html>

@@ -1,11 +1,11 @@
 <% cache("api") do %>
-<section id="api-block">
-  <%= @api_info.repo_name %>
-  <ul>
-    <% @api_info.contributors.each do |c| %>
-      <li><%= c[0] %> (<%= c[1] %> commits)</li>
-    <% end %>
-  </ul>
-  <p id="pull-requests">merged pull requests: <%= @api_info.merged_pull_request %></p>
-</section>
+  <footer class="container-fluid bg-danger" id="api-block">
+    <h4>GitHub Repository: <%= link_to @api_info.repo_name, "https://github.com/cunninghamge/little-esty-shop", id: "gh-link"%><span id="pull-requests"> - <%= @api_info.merged_pull_request %> merged pull requests</span></h4>
+    <h5>Contributors:</h5>
+    <ul id="contributors">
+      <% @api_info.contributors.each do |contributor| %>
+        <li><%= contributor[0] %> (<%= contributor[1] %> commits)</li>
+      <% end %>
+    </ul>
+  </footer>
 <% end %>
