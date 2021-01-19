@@ -4,15 +4,15 @@
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
 
-
-## Goals accomplished 
+User.create!(id:1, username:"1", password:"1", role:0)
+## Goals accomplished
 - Setup normalized database with one to many and many to many relationships
 - Setup custom rake task to seed the database
 - Utilize advanced active record techniques to perform complex database queries
 - Created a service class and poros search to consume GitHub API
 - Webmock is used to mock API tests
 - Edge cases were added to enhance testing
-- Added view methods in application helper to declutter view calls 
+- Added view methods in application helper to declutter view calls
 - Deployed application to [Heroku](https://gentle-forest-90792.herokuapp.com/admin)
 
 ## Setup
@@ -37,7 +37,7 @@ Run the testing suite in the terminal with
 ```
 bundle exec rspec
 ```
-Start the server in the command line with 
+Start the server in the command line with
 ```
 rails server
 ```
@@ -57,7 +57,7 @@ Navigate [localhost:3000](http://localhost:3000)
 - webmock
 
 
-## Project details 
+## Project details
 From [Turing School](https://github.com/turingschool-examples/little-esty-shop)
 
 ## Contributors
