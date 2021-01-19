@@ -26,9 +26,6 @@ RSpec.describe "User authentication" do
       within("form") {click_on("Register")}
 
       expect(page).to have_content("Welcome, testuser!")
-
-      visit '/items'
-
       expect(page).to have_content("Logged in as testuser")
     end
   end
@@ -85,6 +82,42 @@ RSpec.describe "User authentication" do
       expect(page).not_to have_link("Log Out")
       expect(page).to have_link("Register")
       expect(page).to have_link("Log In")
+    end
+  end
+
+  describe "landing pages" do
+    it "landing page for customer login is root path" do
+      user = User.create(username: "testusername", password: "testpassword", role: 0)
+
+      visit login_path
+      fill_in :username, with: user.username
+      fill_in :password, with: user.password
+      within("form") {click_on "Log In"}
+
+      expect(current_path).to eq(root_path)
+    end
+
+    it "landing page for merchant login is merchant dashboard" do
+      merchant = create(:merchant)
+      user = User.create(username: "testusername", password: "testpassword", role: 1, merchant: merchant)
+
+      visit login_path
+      fill_in :username, with: user.username
+      fill_in :password, with: user.password
+      within("form") {click_on "Log In"}
+
+      expect(current_path).to eq(merchant_dashboard_path(merchant))
+    end
+
+    it "landing page for admin login is admin dashboard" do
+      user = User.create(username: "testusername", password: "testpassword", role: 2)
+
+      visit login_path
+      fill_in :username, with: user.username
+      fill_in :password, with: user.password
+      within("form") {click_on "Log In"}
+
+      expect(current_path).to eq(admin_path)
     end
   end
 end

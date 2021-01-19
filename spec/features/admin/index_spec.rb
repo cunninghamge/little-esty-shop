@@ -5,19 +5,19 @@ RSpec.describe "Admin Dashboard" do
     user = create(:user, role: 2)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
   end
-  
+
   describe "visit admin dashboard" do
     it "can see a header indicating admin dashboard" do
       visit "/admin"
 
-      expect(page).to have_content("admin dashboard")
+      expect(page).to have_content("Admin Dashboard")
     end
   end
 
   describe "admin dashboard links" do
     it "can see links to admin merchants index" do
       visit "/admin"
-      click_on 'merchants'
+      click_on 'Merchants'
       expect(current_path).to eq(admin_merchants_path)
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe "Admin Dashboard" do
   describe "admin dashboard links" do
     it "can see links to admin invoices index" do
       visit "/admin"
-      click_on 'invoices'
+      click_on 'Invoices'
       expect(current_path).to eq(admin_invoices_path)
     end
   end

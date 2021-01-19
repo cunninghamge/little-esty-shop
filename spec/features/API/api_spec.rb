@@ -32,7 +32,7 @@ RSpec.describe "API page" do
 
     within("#api-block") do
       expect(page).to have_content('merged pull requests')
-      expect(page.find("#pull-requests").text.split(" ").last.to_i).to be > 0
+      expect(page.find("#pull-requests").text.split[1].to_i).to be > 0
     end
   end
 end

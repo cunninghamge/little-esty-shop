@@ -1,23 +1,38 @@
-<header id="nav">
-  <%= link_to "Home", root_path %>
-  <%= link_to "Items", items_path %>
-  <% if !current_admin? && !current_merchant? %>
-    <p>My Cart (<%= cart.items_count %>)</p>
-    <%= button_to "Check Out", invoices_path if cart.items_count > 0 %>
-  <% end %>
-  <% if current_user %>
-    <p>Logged in as <%= current_user.username %></p>
-    <%= link_to "Log Out", logout_path, method: :delete %>
-  <% else %>
-    <%= link_to "Log In", login_path %>
-    <%= link_to "Register", new_user_path %>
-  <% end %>
-
-  <% if current_admin? %>
-    <%= link_to "Dashboard", admin_path %>
-  <% end %>
-
-  <% if current_merchant? %>
-    <%= link_to "Dashboard", merchant_dashboard_path(current_user.merchant) %>
-  <% end %>
-</header>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-danger main-nav">
+  <div class="container-fluid">
+    <div class="navbar-collapse justify-content-begin">
+        <ul class="nav">
+        <% if !current_admin? && !current_merchant? %>
+          <li class="nav-item"><%= link_to "My Cart (#{cart.items_count})", root_path, class: "btn btn-light" %></li>
+          <li class="nav-item"><%= button_to "Check Out", invoices_path, class: "btn btn-light" if cart.items_count > 0 %></li>
+        <% end %>
+        </ul>
+    </div>
+    <div>
+      <% if current_admin? %>
+        <li class="nav-item"><%= link_to image_tag("logo", id: 'logo'), admin_path, class: "navbar-brand" %></li>
+      <% elsif current_merchant? %>
+        <li class="nav-item"><%= link_to image_tag("logo", id: 'logo'), merchant_dashboard_path(current_user.merchant), class: "navbar-brand" %></li>
+      <% else %>
+        <%= link_to image_tag("logo", id: 'logo'), root_path, class: "navbar-brand" %>
+      <% end %>
+    </div>
+    <div class="navbar-collapse justify-content-end">
+        <ul class="nav">
+          <% if current_user %>
+            <li class="nav-item"><p id="navbar-text">Logged in as <%= current_user.username %></p></li>
+            <li class="nav-item"><%= link_to "Log Out", logout_path, method: :delete, class: "btn btn-light" %></li>
+          <% else %>
+            <li class="nav-item"><%= link_to "Log In", login_path, class: "btn btn-light" %></li>
+            <li class="nav-item"><%= link_to "Register", new_user_path, class: "btn btn-light" %></li>
+          <% end %>
+        </ul>
+    </div>
+  </div>
+</nav>
+<% if current_merchant? %>
+  <%= render 'shared/merchant_header' %>
+<% end %>
+<% if current_admin? %>
+  <%= render 'shared/admin_header' %>
+<% end %>
