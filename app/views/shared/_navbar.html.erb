@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-danger">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-danger main-nav">
   <div class="container-fluid">
     <div class="navbar-collapse justify-content-begin">
         <ul class="nav">
@@ -30,3 +30,9 @@
     </div>
   </div>
 </nav>
+<% if current_merchant? %>
+  <%= render 'shared/merchant_header' %>
+<% end %>
+<% if current_admin? %>
+  <%= render 'shared/admin_header' %>
+<% end %>

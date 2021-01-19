@@ -36,8 +36,9 @@ nav {
     border: 2px solid red;
   }
 }
-.navbar {
+.main-nav {
   height: 90px;
+  position: absolute;
 }
 html,
 body {
@@ -49,7 +50,7 @@ body {
 .content {
   overflow: auto;
   padding-bottom: 120px;
-  padding-top: 120px;
+  padding-top: 150px;
 }
 footer {
   color: white;
@@ -101,4 +102,12 @@ td {
   border: 1px solid lightslategray;
   background-color: #c4e3ed;
   text-align: right;
+}
+#merchant-header {
+  z-index: 1;
+  position:absolute;
+  display: block;
+  padding-top:110px;
+  width: 100%;
+  background-color: lightgray;
 }
