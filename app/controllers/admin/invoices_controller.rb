@@ -6,7 +6,6 @@ class Admin::InvoicesController < Admin::BaseController
   end
 
   def show
-    @merchant = @invoice.merchant
     @invoice_items = @invoice.invoice_items
   end
 
