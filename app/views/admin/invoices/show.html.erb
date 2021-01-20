@@ -5,7 +5,7 @@
     <li>invoice id: <%= @invoice.id %></li>
     <li>invoice status: <%= @invoice.status %></li>
     <li>invoice creation date: <%= format_date(@invoice.created_at) %></li>
-    <li>invoice total: <%= format_price(@invoice.invoice_items.total_revenue) %></li>
+    <li>invoice total: <%= format_price(@invoice.invoice_items.revenue) %></li>
   </ul>
 
   <%= form_with invoice: @invoice, method: :patch do |f| %>
