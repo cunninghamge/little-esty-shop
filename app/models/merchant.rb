@@ -12,7 +12,11 @@ class Merchant < ApplicationRecord
   delegate :discounts_index, to: :discounts
 
   def top_customers
-    Customer.joins(invoices: [:transactions, :items]).select("customers.*, count(*) as count").where(transactions: {result: 0}, items: {merchant_id: id}).group(:id).order("count"=> :desc).limit(5)
+    Customer.joins(invoices: [:transactions, :items])
+    .select("customers.*, count(*) as count")
+    .where(transactions: {result: 0}, items: {merchant_id: id})
+    .group(:id).order("count"=> :desc)
+    .limit(5)
   end
 
   def self.top_merchants(number = 5)
