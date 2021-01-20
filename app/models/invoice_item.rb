@@ -22,7 +22,7 @@ class InvoiceItem < ApplicationRecord
     end
   end
 
-  def self.total_revenue
+  def self.revenue
     sum('quantity * unit_price')
   end
 

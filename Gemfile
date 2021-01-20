@@ -49,9 +49,9 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov'
-  gem 'factory_bot_rails'
-  gem 'faker'
 end
+gem 'factory_bot_rails'
+gem 'faker'
 
 group :test do
   gem 'webmock'

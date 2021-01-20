@@ -2,63 +2,57 @@
 
 ## Background and Description
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Project requirements can be found here:
+https://github.com/turingschool-examples/little-esty-shop
 
+Additionally, students were asked to add additional functionality to allow merchants to apply bulk discounts to their items. Details for this extension are available here:
+https://backend.turing.io/module2/projects/bulk_discounts
 
-## Goals accomplished 
+## Goals accomplished
 - Setup normalized database with one to many and many to many relationships
 - Setup custom rake task to seed the database
 - Utilize advanced active record techniques to perform complex database queries
 - Created a service class and poros search to consume GitHub API
 - Webmock is used to mock API tests
 - Edge cases were added to enhance testing
-- Added view methods in application helper to declutter view calls 
-- Deployed application to [Heroku](https://gentle-forest-90792.herokuapp.com/admin)
+- Use of application helpers, callbacks, and scopes to DRY code
+- Extensive refactor of app and tests to accommodate database changes
+- Deployed application to [Heroku](https://dashboard.heroku.com/apps/little-esty-shop-m2)
+  * note: to view admin pages, log in using these credentials:
+    username: admin
+    password: admin
+  * to view merchant pages, log in using these credentials:
+    username: merchant_1 OR merchant_2 OR merchant_3
+    password: merchant
+  * to view customer pages or to submit an order, log in using these credentials:
+    username: customer
+    password: customer
 
-## Setup
-This project requires Ruby 2.5.3.  
-This project requires Rails 5.2.3 and later  
-1. Clone this repository
-```
-git clone https://github.com/cunninghamge/little-esty-shop
-```
-2. Install dependencies
-```
-bundle install
-```
-Note: you will need to install gem install bundler if you don't have bundler  
-3. Database setup
-```
-rails db:setup
-rake csv_load:all
-```
-## Usage
-Run the testing suite in the terminal with
-```
-bundle exec rspec
-```
-Start the server in the command line with 
-```
-rails server
-```
-Navigate [localhost:3000](http://localhost:3000)
+Additionally, the following were not required but were implemented:
+- User authentication and basic page view authorization
+- Basic shopping cart functionality
+- Styling using Bootstrap framework
+- Caching of information acquired via GitHub's API
+
+### Future improvements:
+- functionality to view shopping cart contents and order history
+- functionality to create customer and merchant accounts, and for merchants and customers to edit their profile information
+- refactor API functionality to make better use of POROs
+- refactor ActiveRecord methods to combine similar queries used by different models
 
 ## Database Scheme
 ![Schema](media/database_schema.png)
 
 ## Technologies
-- Ruby
-- Ruby on Rails
+- Ruby v.2.5.3
+- Ruby on Rails 5.2.4
 ### Utilities
 - rspec-rails
 - factory_bot_rails
 - faker
 - simplecov
 - webmock
-
-
-## Project details 
-From [Turing School](https://github.com/turingschool-examples/little-esty-shop)
+- bootstrap
 
 ## Contributors
 [Gus Cunningham](https://github.com/cunninghamge)

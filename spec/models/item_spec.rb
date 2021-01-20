@@ -94,17 +94,16 @@ describe Item, type: :model do
 
   describe 'delegate methods:' do
     it 'top_sales_day' do
-      merchant1 = create(:merchant)
-      items = create_list(:item, 5, merchant: merchant1, unit_price: 1)
-
+      merchant = create(:merchant)
+      items = create_list(:item, 5, merchant: merchant, unit_price: 1)
       5.times do |index|
         invoice = create(:invoice, created_at: Date.today - index)
         items[0..index].each do |item|
-          create(:invoice_item, item: item, invoice: invoice, quantity: (5 - index), unit_price: 1)
+          create(:invoice_item, item: item, invoice: invoice, quantity: 5 - index)
         end
         create(:transaction, invoice: invoice, result: 0)
       end
-
+      
       expect(items[0].top_sales_day).to eq(Date.today)
       expect(items[1].top_sales_day).to eq(Date.today - 1)
       expect(items[2].top_sales_day).to eq(Date.today - 2)

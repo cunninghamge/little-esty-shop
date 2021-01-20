@@ -7,7 +7,7 @@ RSpec.describe "Merchant Invoices show" do
   let!(:merchant) {create(:merchant)}
   let!(:customer) {create(:customer)}
   let!(:item) {create(:item, merchant: merchant, unit_price: 100)}
-  let!(:invoice) {create(:invoice, merchant: merchant, customer: customer)}
+  let!(:invoice) {create(:invoice, customer: customer)}
   let!(:invoice_item) {create(:invoice_item, invoice: invoice, quantity: 5, item: item, unit_price: 100, status: 0)}
 
   let!(:discount_1) {create(:discount, merchant: merchant, threshold: 10, percentage: 20)}
@@ -97,7 +97,7 @@ RSpec.describe "Merchant Invoices show" do
     it "displays the total revenue for the invoice" do
       visit merchant_invoice_path(invoice)
 
-      expect(page).to have_content("Total Revenue: #{format_price(invoice.total_revenue)}")
+      expect(page).to have_content("Total Revenue: #{format_price(invoice.revenue)}")
     end
 
     it "includes the total amount of discounts applied" do
@@ -105,7 +105,7 @@ RSpec.describe "Merchant Invoices show" do
 
       within("tr.total") do
         expect(page).to have_content(format_price(invoice_items.discount_total))
-        expect(page).to have_content(format_price(invoice_items.total_revenue))
+        expect(page).to have_content(format_price(invoice_items.revenue))
       end
     end
   end

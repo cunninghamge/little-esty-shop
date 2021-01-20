@@ -6,7 +6,6 @@ describe Merchant, type: :model do
   describe "relations" do
     it {should have_many :invoices}
     it {should have_many :items}
-    it {should have_many(:customers).through(:invoices)}
     it {should have_many :discounts}
   end
 
@@ -62,12 +61,27 @@ describe Merchant, type: :model do
   describe "class methods" do
     it "top_merchants" do
       merchant1 = create(:merchant)
-      create(:item, :sold, merchant: merchant1, sales: 1)
-      merchant2 = create(:merchant)
-      create(:item, :sold, merchant: merchant2, sales: 2)
-      merchant3 = create(:merchant)
-      create(:item, :sold, merchant: merchant3, sales: 3)
+      item = create(:item, unit_price: 1, merchant: merchant1)
+      invoice = create(:invoice)
+      invoice_item = create(:invoice_item, quantity: 1, item: item, invoice: invoice)
+      create(:transaction, result: 0, invoice: invoice)
 
+      merchant2 = create(:merchant)
+      2.times do
+        item = create(:item, unit_price: 1, merchant: merchant2)
+        invoice = create(:invoice)
+        invoice_item = create(:invoice_item, quantity: 1, item: item, invoice: invoice)
+        create(:transaction, result: 0, invoice: invoice)
+      end
+
+      merchant3 = create(:merchant)
+      3.times do
+        item = create(:item, unit_price: 1, merchant: merchant3)
+        invoice = create(:invoice)
+        invoice_item = create(:invoice_item, quantity: 1, item: item, invoice: invoice)
+        create(:transaction, result: 0, invoice: invoice)
+      end
+      
       expect(Merchant.top_merchants(1)).to eq([merchant3])
       expect(Merchant.top_merchants(2)).to eq([merchant3, merchant2])
     end

@@ -30,7 +30,7 @@
     <td><% if @invoice_items.discount_total != 0 %>
 
         <%= format_price(@invoice_items.discount_total) %><% end %></td>
-    <td><%= format_price(@invoice_items.total_revenue) %></td>
+    <td><%= format_price(@invoice_items.revenue) %></td>
     <td></td>
   </tr>
 </table>

@@ -67,7 +67,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.before :each do
-    Faker::UniqueGenerator.clear
+    ::Faker::UniqueGenerator.clear
   end
 
   Shoulda::Matchers.configure do |config|

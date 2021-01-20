@@ -26,7 +26,7 @@ describe InvoiceItem, type: :model do
       create(:invoice_item, quantity: 5, item: items[0])
       create(:invoice_item, quantity: 5, item: items[1])
 
-      expect(InvoiceItem.total_revenue).to eq(90)
+      expect(InvoiceItem.revenue).to eq(90)
     end
   end
 
@@ -84,7 +84,7 @@ describe InvoiceItem, type: :model do
     let!(:discount_1) {create(:discount, merchant: merchant_1, percentage: 20, threshold: 10)}
     let!(:discount_2) {create(:discount, merchant: merchant_1, percentage: 30, threshold: 16)}
     let!(:discount_3) {create(:discount, merchant: merchant_1, percentage: 15, threshold: 15)}
-    let!(:invoice) {create(:invoice, merchant: merchant_1)}
+    let!(:invoice) {create(:invoice)}
     let!(:item_1) {create(:item, merchant: merchant_1, unit_price: 10)}
     let!(:item_2) {create(:item, merchant: merchant_1, unit_price: 10)}
 
