@@ -11,16 +11,12 @@ FactoryBot.define do
 
       after(:create) do |customer, transient|
         transient.successful.times do
-          create(:invoice,
-                 :with_successful_transaction,
-                 merchant: transient.merchant,
-                 customer: customer)
+          item = create(:item, merchant: transient.merchant)
+          create(:invoice, :with_successful_transaction, item: item, customer: customer)
         end
         transient.failed.times do
-          create(:invoice,
-                 :with_failed_transaction,
-                  merchant: transient.merchant,
-                  customer: customer)
+          item = create(:item, merchant: transient.merchant)
+          create(:invoice, :with_failed_transaction, item: item, customer: customer)
         end
       end
     end

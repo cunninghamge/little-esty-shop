@@ -39,7 +39,7 @@ describe Invoice, type: :model do
     let!(:discount_1) {create(:discount, merchant: merchant_1, percentage: 20, threshold: 10)}
     let!(:discount_2) {create(:discount, merchant: merchant_1, percentage: 30, threshold: 16)}
     let!(:discount_3) {create(:discount, merchant: merchant_1, percentage: 15, threshold: 15)}
-    let!(:invoice) {create(:invoice, merchant: merchant_1)}
+    let!(:invoice) {create(:invoice)}
     let!(:item_1) {create(:item, merchant: merchant_1, unit_price: 10)}
     let!(:item_2) {create(:item, merchant: merchant_1, unit_price: 10)}
 
@@ -71,14 +71,13 @@ describe Invoice, type: :model do
 
       customer = create(:customer, first_name: "Linda", last_name: "Mayhew")
 
-      invoice = create(:invoice, merchant: merchant1, customer: customer)
+      invoice = create(:invoice, customer: customer)
 
       items.each do |item|
         create(:invoice_item, item: item, invoice: invoice, quantity: 5, unit_price: 1)
       end
-      # create(:transaction, invoice: invoice, result: 0)
 
-      expect(invoice.total_revenue).to eq(25)
+      expect(invoice.revenue).to eq(25)
     end
   end
 end
