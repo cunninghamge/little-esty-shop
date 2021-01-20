@@ -41,7 +41,7 @@ Additionally, the following were not required but were implemented:
 - refactor ActiveRecord methods to combine similar queries used by different models
 
 ## Database Scheme
-![Schema](media/database_schema.png)
+![Schema](media/upds_database_schema.png)
 
 ## Technologies
 - Ruby v.2.5.3
