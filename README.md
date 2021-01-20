@@ -18,15 +18,25 @@ https://backend.turing.io/module2/projects/bulk_discounts
 - Use of application helpers, callbacks, and scopes to DRY code
 - Extensive refactor of app and tests to accommodate database changes
 - Deployed application to [Heroku](https://dashboard.heroku.com/apps/little-esty-shop-m2)
+
   * note: to view admin pages, log in using these credentials:
+
     username: admin
+    
     password: admin
+  
   * to view merchant pages, log in using these credentials:
+  
     username: merchant_1 OR merchant_2 OR merchant_3
+    
     password: merchant
+  
   * to view customer pages or to submit an order, log in using these credentials:
+  
     username: customer
+    
     password: customer
+
 
 Additionally, the following were not required but were implemented:
 - User authentication and basic page view authorization
